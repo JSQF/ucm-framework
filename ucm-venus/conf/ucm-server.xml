@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-autowire="byName">
+
+
+    <!-- import server side spring context file -->
+    <import resource="classpath:/spring/applicationContext-service-container.xml"/>
+
+    <!-- use venus placeholder config process -->
+    <bean class="com.meidusa.venus.spring.VenusPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:${project.home:.}/application.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="serviceManager" class="com.meidusa.venus.backend.services.xml.XmlFileServiceManager">
+        <property name="configFiles">
+            <list>
+                <value>file:${project.home:.}/conf/venus-ucm.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="authenticateProvider" class="com.meidusa.venus.backend.authenticate.SimpleAuthenticateProvider">
+        <property name="useDummy" value="true"/>
+        <property name="username" value="venus"/>
+        <property name="password" value="venus"/>
+    </bean>
+
+    <bean id="helloService" class="com.meidusa.venus.hello.impl.DefaultHelloService">
+        <property name="greeting">
+            <value>hello venus hello service,hello venus hello service,hello venus hello service,hello venus hello
+                service,hello venus hello service
+            </value>
+        </property>
+    </bean>
+
+</beans>
