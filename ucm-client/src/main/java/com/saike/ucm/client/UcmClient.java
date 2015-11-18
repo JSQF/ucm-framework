@@ -44,7 +44,7 @@ public class UcmClient {
 
         Properties localProperties = loadLocalProperties();
 
-        String ipAddressList = getUcmServerIpAddressList(localProperties.getProperty("ucm.ipAddressList"));
+        String ipAddressList = getUcmServerIpAddressList(localProperties.getProperty("ucm.ipAddressList"), System.getProperty("global.ucm.ipAddressList"));
         String projectCode = localProperties.getProperty("ucm.projectCode");
         String projectVersion = localProperties.getProperty("ucm.projectVersion");
 
@@ -65,6 +65,7 @@ public class UcmClient {
 
             try {
                 propertyList = ucmApiService.getProperties(projectCode, projectVersion);
+                System.out.println(propertyList);
             } catch (ProjectNotInUseException e) {
                 logger.error("ucm项目不可用", e);
                 break;
@@ -111,9 +112,9 @@ public class UcmClient {
         return localProperties;
     }
 
-    private String getUcmServerIpAddressList(String ipAddressList) {
+    private String getUcmServerIpAddressList(String ipAddressList, String systemDefault) {
         if (ipAddressList == null) {
-            return System.getProperty("global.ucm.ipAddressList");
+            return systemDefault;
         }
         return ipAddressList;
     }

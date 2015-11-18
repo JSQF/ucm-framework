@@ -27,5 +27,11 @@ public final class UcmContextHolder {
         return maps.get(key);
     }
 
+    public void printAll(){
+        for(String key: maps.keySet()){
+            System.out.println(key + "," + maps.get(key));
+        }
+    }
+
 
 }
