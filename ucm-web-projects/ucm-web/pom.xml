@@ -12,7 +12,7 @@
     <artifactId>ucm-web</artifactId>
     <version>1.0.0</version>
     <name>ucm-web</name>
-    <url>http://maven.apache.org</url>
+    <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

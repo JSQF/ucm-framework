@@ -2,28 +2,64 @@ package com.saike.ucm.venus.impl;
 
 import com.meidusa.venus.annotations.Param;
 import com.meidusa.venus.backend.context.RequestContext;
+import com.meidusa.venus.io.utils.Input;
 import com.saike.ucm.api.UcmApiService;
 import com.saike.ucm.domain.api.UcmProperty;
 import com.saike.ucm.exception.api.UcmApiException;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * Created by huawei on 11/17/15.
  */
+@Component(value = "ucmApiService")
 public class DefaultUcmApiService implements UcmApiService {
 
     private String zookeeperServerList;
 
     public DefaultUcmApiService() {
         Watcher watcher = new Watcher();
-        watcher.start();
+        //watcher.start();
     }
 
     @Override
     public List<UcmProperty> getProperties(@Param(name = "projectCode") String projectCode, @Param(name = "version") String version) throws UcmApiException {
-        return getPropertiesInternal(RequestContext.getRequestContext().getRequestInfo().getRemoteIp(), projectCode, version);
+        //ucm-web mock data
+        List<UcmProperty> lists = new ArrayList<>();
+
+        InputStream is = DefaultUcmApiService.class.getResourceAsStream("/ucm-web.properties");
+
+        try{
+            Properties props = new Properties();
+            props.load(is);
+
+            Enumeration<Object> enumeration = props.keys();
+            while(enumeration.hasMoreElements()) {
+                Object key = enumeration.nextElement();
+                UcmProperty property = new UcmProperty();
+                property.setName(key.toString());
+                property.setValue(props.get(key).toString());
+                property.setDisplay(true);
+                property.setUpdateTime(new Date());
+                lists.add(property);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (is != null){
+                try{
+                    is.close();
+                }catch (Exception e){
+
+                }
+            }
+        }
+
+
+        return lists;
+        //return getPropertiesInternal(RequestContext.getRequestContext().getRequestInfo().getRemoteIp(), projectCode, version);
     }
 
     @Override
@@ -56,6 +92,15 @@ public class DefaultUcmApiService implements UcmApiService {
     static class Watcher extends Thread {
 
         public void run() {
+
+            while(true){
+                System.out.println("run");
+                try {
+                    Thread.sleep(5000L);
+                } catch (InterruptedException e) {
+
+                }
+            }
 
         }
 

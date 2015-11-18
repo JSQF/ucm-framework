@@ -13,4 +13,11 @@
     <modules>
         <module>ucm-web</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.saike.ucm</groupId>
+            <artifactId>ucm-client</artifactId>
+        </dependency>
+    </dependencies>
 </project>

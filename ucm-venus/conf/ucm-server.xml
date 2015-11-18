@@ -31,12 +31,7 @@
         <property name="password" value="venus"/>
     </bean>
 
-    <bean id="helloService" class="com.meidusa.venus.hello.impl.DefaultHelloService">
-        <property name="greeting">
-            <value>hello venus hello service,hello venus hello service,hello venus hello service,hello venus hello
-                service,hello venus hello service
-            </value>
-        </property>
-    </bean>
+    <bean id="ucmApiService"
+        class="com.saike.ucm.venus.impl.DefaultUcmApiService"/>
 
 </beans>
