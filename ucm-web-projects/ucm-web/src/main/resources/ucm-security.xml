@@ -4,7 +4,7 @@
         xmlns="http://www.springframework.org/schema/beans"
         xmlns:security="http://www.springframework.org/schema/security"
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd" default-lazy-init="false">
 
     <security:http auto-config="true">
 
@@ -20,11 +20,18 @@
     </security:http>
 
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="huawei" password="huawei" authorities="ROLE_ADMIN"/>
-            </security:user-service>
-        </security:authentication-provider>
+        <security:authentication-provider ref="ucmAuthenticationProvider" />
     </security:authentication-manager>
+
+    <bean id="activeDirectoryLdapAuthenticationProvider" class="org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider">
+        <constructor-arg index="0" value="chexiang.com"/>
+        <constructor-arg index="1" value="ldap://10.47.12.60:389"/>
+        <constructor-arg index="2" value="dc=dds,dc=com"/>
+        <property name="convertSubErrorCodesToExceptions" value="true"/>
+    </bean>
+
+    <bean id="ucmAuthenticationProvider" class="com.saike.ucm.security.UcmAuthenticationProvider">
+        <constructor-arg index="0" ref="activeDirectoryLdapAuthenticationProvider"/>
+    </bean>
 
 </beans>

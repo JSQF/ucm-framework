@@ -5,3 +5,4 @@
 .project
 .springBeans
 target
+.DS*

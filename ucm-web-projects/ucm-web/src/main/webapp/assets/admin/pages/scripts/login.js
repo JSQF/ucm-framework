@@ -20,15 +20,34 @@ var Login = function() {
 
             messages: {
                 username: {
-                    required: "Username is required."
+                    required: "请填写用户名"
                 },
                 password: {
-                    required: "Password is required."
+                    required: "请填写密码"
                 }
             },
 
-            invalidHandler: function(event, validator) { //display error alert on form submit   
-                $('.alert-danger', $('.login-form')).show();
+            invalidHandler:function(event, validator) {
+            },
+
+            debug:true,
+
+            showErrors:function(errorMap, errorList){
+                var message = null;
+                if(errorMap.username) {
+                    message = errorMap.username;
+                }
+
+                if(message != null && errorMap.password) {
+                    message = message + "<br/>" + errorMap.password;
+                }else if (errorMap.password){
+                    message = errorMap.password;
+                }
+
+                if (message != null && message != '') {
+                    $("#LoginAlterMessage").html(message);
+                    $('.alert-danger', $('.login-form')).show();
+                }
             },
 
             highlight: function(element) { // hightlight error inputs
@@ -79,7 +98,7 @@ var Login = function() {
                 }
             },
 
-            invalidHandler: function(event, validator) { //display error alert on form submit   
+            invalidHandler: function(event, validator) { //display error alert on form submit
 
             },
 
@@ -192,7 +211,7 @@ var Login = function() {
                 }
             },
 
-            invalidHandler: function(event, validator) { //display error alert on form submit   
+            invalidHandler: function(event, validator) { //display error alert on form submit
 
             },
 
@@ -207,7 +226,7 @@ var Login = function() {
             },
 
             errorPlacement: function(error, element) {
-                if (element.attr("name") == "tnc") { // insert checkbox errors after the container                  
+                if (element.attr("name") == "tnc") { // insert checkbox errors after the container
                     error.insertAfter($('#register_tnc_error'));
                 } else if (element.closest('.input-icon').size() === 1) {
                     error.insertAfter(element.closest('.input-icon'));

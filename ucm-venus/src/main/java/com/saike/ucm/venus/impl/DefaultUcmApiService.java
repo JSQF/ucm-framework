@@ -2,7 +2,6 @@ package com.saike.ucm.venus.impl;
 
 import com.meidusa.venus.annotations.Param;
 import com.meidusa.venus.backend.context.RequestContext;
-import com.meidusa.venus.io.utils.Input;
 import com.saike.ucm.api.UcmApiService;
 import com.saike.ucm.domain.api.UcmProperty;
 import com.saike.ucm.exception.api.UcmApiException;

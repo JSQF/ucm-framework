@@ -12,6 +12,7 @@
     <name>ucm-web-projects</name>
     <modules>
         <module>ucm-web</module>
+        <module>ucm-security</module>
     </modules>
 
     <dependencies>
