@@ -22,7 +22,6 @@ public class UcmAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
         Authentication authenticationDelegate = null;
         try{
             authenticationDelegate = this.delegate.authenticate(authentication);
@@ -33,9 +32,8 @@ public class UcmAuthenticationProvider implements AuthenticationProvider {
         if (authenticationDelegate == null) {
             return authenticationDelegate;
         }
-
-
-        return authenticationDelegate;
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+        return token;
     }
 
     @Override

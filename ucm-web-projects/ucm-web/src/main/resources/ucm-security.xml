@@ -10,6 +10,7 @@
 
 
         <security:intercept-url pattern="/login/**" access="permitAll"/>
+        <security:intercept-url pattern="/logout.htm" access="permitAll"/>
         <security:intercept-url pattern="/assets/**" access="permitAll"/>
         <security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
 
@@ -17,6 +18,8 @@
                              login-processing-url="/login/do-login.htm"
                              username-parameter="username"
                              password-parameter="password"/>
+
+        <security:logout logout-success-url="/login/index.htm?logout"/>
     </security:http>
 
     <security:authentication-manager>

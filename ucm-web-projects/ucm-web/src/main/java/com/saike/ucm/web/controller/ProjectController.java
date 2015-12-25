@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/project")
 public class ProjectController {
 
-    @RequestMapping("/index")
-    public String indexAction() {
-        return "project/index";
+    @RequestMapping("/show-add")
+    public String showAddAction() {
+        return "project/add";
+    }
+
+    @RequestMapping("/show-manager")
+    public String showManagerAction(){
+        return "project/manager";
     }
 }
