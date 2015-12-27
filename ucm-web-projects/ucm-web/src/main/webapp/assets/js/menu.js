@@ -2,18 +2,30 @@ var Menu = function() {
 
     var handleMenu = function(){
         $("a", ".page-sidebar-menu").on('click', function(){
-            var href = $(this).attr("href");
-            if (href.startsWith("javascript")){
+            var menuId = $(this).attr("id");
+            if (menuId == null || menuId == ""){
                 return;
             }
-            $.cookie("menuhref", href);
+            document.cookie="menuId=" +menuId + ";path=/;";
         })
     }
 
     var locateMenu = function(){
 
-        var href  = $.cookie('menuhref');
-        if (href == null || href == '') {
+        var menuId = null;
+        if (document.cookie.length > 0) {
+            var start = document.cookie.indexOf("menuId=");
+            if (start != -1) {
+                start = start + "menuId".length + 1;
+                var end = document.cookie.indexOf(";", start);
+                if (end == -1) {
+                    end = document.cookie.length;
+                }
+                menuId =  unescape(document.cookie.substring(start, end));
+            }
+        }
+
+        if (menuId == null || menuId == '') {
             return;
         }
 
@@ -25,10 +37,19 @@ var Menu = function() {
 
             anchor.removeClass("active")
 
-            if (anchor.attr("href") == href) {
+
+
+            if (anchor.attr("id") == null || anchor.attr("id") == '') {
+                return;
+            }
+
+            if (anchor.attr("id") == menuId) {
                 li.addClass("active open");
                 anchor.addClass("active");
-                li.click();
+                if (li.parent('ul').hasClass('sub-menu')) {
+                    var obj = li.parent('ul').parent().children().first();
+                    obj.click();
+                }
             }
         });
 

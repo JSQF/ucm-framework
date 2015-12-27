@@ -19,7 +19,8 @@
                              username-parameter="username"
                              password-parameter="password"/>
 
-        <security:logout logout-success-url="/login/index.htm?logout"/>
+        <security:logout logout-url="/logout.htm" logout-success-url="/login/index.htm?logout"/>
+        <security:csrf request-matcher-ref="ucmCsrfSecurityRequestMatcher"/>
     </security:http>
 
     <security:authentication-manager>
@@ -35,6 +36,9 @@
 
     <bean id="ucmAuthenticationProvider" class="com.saike.ucm.security.UcmAuthenticationProvider">
         <constructor-arg index="0" ref="activeDirectoryLdapAuthenticationProvider"/>
+        <property name="userService" ref="userService"/>
     </bean>
+
+    <bean id="ucmCsrfSecurityRequestMatcher" class="com.saike.ucm.security.UcmCsrfSecurityRequestMatcher" />
 
 </beans>

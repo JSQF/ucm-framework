@@ -65,7 +65,6 @@ public class UcmClient {
 
             try {
                 propertyList = ucmApiService.getProperties(projectCode, projectVersion);
-                System.out.println(propertyList);
             } catch (ProjectNotInUseException e) {
                 logger.error("ucm项目不可用", e);
                 break;

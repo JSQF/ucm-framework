@@ -12,7 +12,6 @@
     <artifactId>ucm-venus</artifactId>
     <version>1.0.0</version>
     <name>ucm-venus</name>
-    <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -35,4 +34,15 @@
             <version>2.4.4-HEXNOVA</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptor>src/assembly/distribution.xml</descriptor>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

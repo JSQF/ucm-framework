@@ -7,7 +7,9 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:ucm-security.xml</param-value>
+        <param-value>classpath:ucm-security.xml,
+        classpath:ucm-dao.xml,
+        classpath:ucm-service.xml</param-value>
     </context-param>
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

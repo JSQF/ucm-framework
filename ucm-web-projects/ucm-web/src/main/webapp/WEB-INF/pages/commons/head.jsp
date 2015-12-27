@@ -22,6 +22,8 @@
     <link href="<%=request.getContextPath()%>/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
     <link id="style_color" href="<%=request.getContextPath()%>/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"/>
     <link href="<%=request.getContextPath()%>/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=request.getContextPath()%>/assets/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/favicon.ico"/>
 </head>

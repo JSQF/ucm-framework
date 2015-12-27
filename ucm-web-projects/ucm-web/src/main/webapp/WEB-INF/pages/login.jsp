@@ -103,6 +103,7 @@
         Metronic.init(); // init metronic core components
         Layout.init(); // init current layout
         Login.init();
+        document.cookie = "menuId=1;expires=-1;"
     });
 </script>
 <!-- END JAVASCRIPTS -->

@@ -1,7 +1,6 @@
 package com.saike.ucm.client.web;
 
 import com.saike.ucm.client.UcmClient;
-import com.saike.ucm.client.context.UcmContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +26,8 @@ public class UcmContextLoaderListener implements ServletContextListener {
         try{
             UcmClient client = new UcmClient(ucmContextConfigLocation);
             client.load();
-            UcmContextHolder.getHolder().printAll();
         }catch (Exception e) {
-
             logger.error("ucm load error", e);
-
         }
 
     }

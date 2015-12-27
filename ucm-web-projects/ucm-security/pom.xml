@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.saike.ucm</groupId>
+            <artifactId>ucm-service</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>

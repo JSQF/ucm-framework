@@ -1,4 +1,4 @@
-main is com.meidusa.venus.hello.HelloworldApplication from venus
+main is com.saike.ucm.venus.UcmApplication from venus
 
 [venus]
 load ${project.home}/lib/*.jar

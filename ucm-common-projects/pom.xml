@@ -14,6 +14,8 @@
         <module>ucm-api</module>
         <module>ucm-domain</module>
         <module>ucm-exception</module>
+        <module>ucm-service</module>
+        <module>ucm-dao</module>
     </modules>
     <dependencies>
         <dependency>
