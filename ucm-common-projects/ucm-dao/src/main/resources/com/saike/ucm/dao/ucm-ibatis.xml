@@ -6,5 +6,7 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.saike.ucm.domain.User" alias="User"/>
+        <typeAlias type="com.saike.ucm.domain.Project" alias="Project"/>
+        <typeAlias type="com.saike.ucm.domain.IdbInformation" alias="IdbInformation"/>
     </typeAliases>
 </configuration>

@@ -1,8 +1,11 @@
 package com.saike.ucm.web.utils;
 
 import com.meidusa.fastjson.JSON;
+import com.saike.ucm.domain.Project;
+import com.saike.ucm.domain.ProjectType;
 import com.saike.ucm.domain.User;
 import com.saike.ucm.web.domain.DataTableResult;
+import com.saike.ucm.web.domain.ListProjectRecord;
 import com.saike.ucm.web.domain.ListUserRecord;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,5 +51,23 @@ public class DataTableUtils {
         dtr.setDraw(draw);
         dtr.setError(message);
         dataTableResponse(response, dtr);
+    }
+
+    public static List<ListProjectRecord> getListProjectRecord(List<Project> projectList) {
+
+        if (projectList == null || projectList.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<ListProjectRecord> records = new ArrayList<>();
+        for(Project project : projectList) {
+            ListProjectRecord record = new ListProjectRecord();
+            record.setId(project.getId());
+            record.setCode(project.getCode());
+            record.setName(project.getName());
+            record.setType(ProjectType.getProjectType(Integer.parseInt(project.getType())).getDesc());
+            records.add(record);
+        }
+
+        return records;
     }
 }

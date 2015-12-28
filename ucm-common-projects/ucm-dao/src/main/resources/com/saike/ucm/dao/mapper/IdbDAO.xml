@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.saike.ucm.dao.IdbDAO">
+    <resultMap id="IdbInformation" type="IdbInformation">
+        <id column="id" property="id"/>
+        <result column="database_name" property="name"/>
+        <result column="database_host" property="host"/>
+        <result column="database_type" property="type"/>
+        <result column="database" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="paginateDatabase" resultMap="IdbInformation">
+
+    </select>
+</mapper>

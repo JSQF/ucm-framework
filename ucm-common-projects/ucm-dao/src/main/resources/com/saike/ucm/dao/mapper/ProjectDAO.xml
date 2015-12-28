@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.saike.ucm.dao.ProjectDAO">
+    <resultMap id="Project" type="Project">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getProjectByCode" parameterType="string" resultMap="Project">
+        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectCode}
+    </select>
+
+    <select id="getAllProjects" parameterType="string" resultMap="Project">
+        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project order by code
+    </select>
+
+    <select id="paginate" resultMap="Project">
+        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project
+        <where>
+            <if test="condition.code!=null and condition.code !=''">
+                code = #{condition.code}
+            </if>
+            <if test="condition.type!=null and condition.type !=''">
+                and type = #{condition.type}
+            </if>
+        </where>
+    </select>
+
+    <select id="paginateCount" resultType="int">
+        SELECT COUNT(*) FROM t_ucm_project
+        <where>
+            <if test="condition.code!=null and condition.code !=''">
+                code = #{condition.code}
+            </if>
+            <if test="condition.type!=null and condition.type !=''">
+                and type = #{condition.type}
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveProject" parameterType="Project">
+        INSERT INTO t_ucm_project (code, name, type, description, create_time, update_time) VALUES (#{code}, #{name}, #{type}, #{description}, #{createTime}, #{updateTime})
+    </insert>
+
+
+</mapper>

@@ -12,12 +12,30 @@ public enum ProjectType {
 
     private Integer type;
     private String desc;
-    private ProjectType(Integer type, String desc) {
+
+    ProjectType(Integer type, String desc) {
         this.type = type;
         this.desc = desc;
     }
 
-    public static Map<Integer, String> getProjectTypeMap(){
+    public static ProjectType getProjectType(int type) {
+        switch (type) {
+            case 0:
+                return WEB;
+            case 1:
+                return VENUS;
+            case 2:
+                return REDIS;
+            case 3:
+                return MONGO;
+            case 4:
+                return ACTIVEMQ;
+            default:
+                return null;
+        }
+    }
+
+    public static Map<Integer, String> getProjectTypeMap() {
         Map<Integer, String> map = new HashMap<>();
         map.put(WEB.type, WEB.desc);
         map.put(VENUS.type, VENUS.desc);
@@ -25,5 +43,21 @@ public enum ProjectType {
         map.put(MONGO.type, MONGO.desc);
         map.put(ACTIVEMQ.type, ACTIVEMQ.desc);
         return map;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }
