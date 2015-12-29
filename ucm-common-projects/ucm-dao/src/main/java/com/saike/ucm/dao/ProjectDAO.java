@@ -19,4 +19,6 @@ public interface ProjectDAO {
     List<Project> paginate(Pagination<Project> condition);
 
     int paginateCount(Pagination condition);
+
+    Project getProjectById(String projectId);
 }

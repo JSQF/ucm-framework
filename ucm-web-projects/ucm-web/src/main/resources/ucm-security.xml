@@ -29,7 +29,7 @@
 
     <bean id="activeDirectoryLdapAuthenticationProvider" class="org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider">
         <constructor-arg index="0" value="chexiang.com"/>
-        <constructor-arg index="1" value="ldap://10.47.12.60:389"/>
+        <constructor-arg index="1" value="ldap://ad.chexiang.com:389"/>
         <constructor-arg index="2" value="dc=dds,dc=com"/>
         <property name="convertSubErrorCodesToExceptions" value="true"/>
     </bean>

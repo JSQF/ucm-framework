@@ -45,6 +45,13 @@ public enum ProjectType {
         return map;
     }
 
+    public static Map<Integer, String> getNormalProjectTypeMap() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(WEB.type, WEB.desc);
+        map.put(VENUS.type, VENUS.desc);
+        return map;
+    }
+
     public Integer getType() {
         return type;
     }

@@ -91,6 +91,15 @@ public class DefaultProjectService implements ProjectService {
         return paginationResult;
     }
 
+    @Override
+    public Project getProjectById(String projectId) throws UcmServiceException {
+        try{
+            return this.projectDAO.getProjectById(projectId);
+        }catch(Exception e) {
+            throw new UcmServiceException("获取项目信息失败", e);
+        }
+    }
+
 
     public ProjectDAO getProjectDAO() {
         return projectDAO;

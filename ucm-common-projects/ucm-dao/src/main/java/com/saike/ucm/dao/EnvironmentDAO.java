@@ -14,7 +14,9 @@ public interface EnvironmentDAO {
 
     Environment getDefaultEnvironment();
 
-    List<Environment> paginate(Pagination<Environment> condition);
+    List<Environment> getAllEnvironment();
 
-    int paginateCount(Pagination<Environment> condition);
+    Environment getEnvironmentByCode(String code);
+
+    Integer getMaxOrder();
 }

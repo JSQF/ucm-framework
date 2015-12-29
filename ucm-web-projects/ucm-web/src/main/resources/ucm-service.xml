@@ -8,5 +8,6 @@
 
     <bean id="userService" class="com.saike.ucm.service.impl.DefaultUserService" p:userDAO-ref="userDAO" />
     <bean id="projectService" class="com.saike.ucm.service.impl.DefaultProjectService" p:projectDAO-ref="projectDAO"/>
+    <bean id="environmentService" class="com.saike.ucm.service.impl.DefaultEnvironmentService" p:environmentDAO-ref="environmentDAO"/>
 
 </beans>

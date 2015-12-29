@@ -1,12 +1,14 @@
 package com.saike.ucm.web.utils;
 
 import com.meidusa.fastjson.JSON;
+import com.saike.ucm.domain.Environment;
 import com.saike.ucm.domain.Project;
 import com.saike.ucm.domain.ProjectType;
 import com.saike.ucm.domain.User;
 import com.saike.ucm.web.domain.DataTableResult;
 import com.saike.ucm.web.domain.ListProjectRecord;
 import com.saike.ucm.web.domain.ListUserRecord;
+import com.saike.ucm.web.domain.LitEnvironmentRecord;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -69,5 +71,10 @@ public class DataTableUtils {
         }
 
         return records;
+    }
+
+    public static List<LitEnvironmentRecord> getListEnvironmentRecord(List<Environment> results) {
+
+        return null;
     }
 }

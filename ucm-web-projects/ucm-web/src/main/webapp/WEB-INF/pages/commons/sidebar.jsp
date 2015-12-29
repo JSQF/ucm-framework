@@ -19,6 +19,33 @@
                 </a>
             </li>
             <li>
+                <a  id='7' href="<%=request.getContextPath()%>/env/show-manager.htm">
+                    <i class="icon-basket"></i>
+                    <span class="title">环境管理</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="icon-basket"></i>
+                    <span class="title">项目管理</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a id="4" href="<%=request.getContextPath()%>/project/show-add.htm">
+                            <i class="icon-home"></i>
+                            添加项目</a>
+                    </li>
+                    <li>
+                        <a id="5" href="<%=request.getContextPath()%>/project/show-manager.htm">
+                            <i class="icon-basket"></i>
+                            管理项目</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
                 <a href="javascript:;">
                     <i class="icon-user"></i>
                     <span class="title">用户 & 角色</span>
@@ -41,44 +68,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="icon-basket"></i>
-                    <span class="title">项目管理</span>
-                    <span class="arrow "></span>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a id="4" href="<%=request.getContextPath()%>/project/show-add.htm">
-                            <i class="icon-home"></i>
-                            添加项目</a>
-                    </li>
-                    <li>
-                        <a id="5" href="<%=request.getContextPath()%>/project/show-manager.htm">
-                            <i class="icon-basket"></i>
-                            管理项目</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="icon-basket"></i>
-                    <span class="title">环境管理</span>
-                    <span class="arrow "></span>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a id="6" href="<%=request.getContextPath()%>/env/show-add.htm">
-                            <i class="icon-home"></i>
-                            添加环境</a>
-                    </li>
-                    <li>
-                        <a id="7" href="<%=request.getContextPath()%>/env/show-manager.htm">
-                            <i class="icon-basket"></i>
-                            管理环境</a>
-                    </li>
-                </ul>
-            </li>
+
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

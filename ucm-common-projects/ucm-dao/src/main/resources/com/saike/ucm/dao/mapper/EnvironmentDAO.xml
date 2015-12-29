@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.saike.ucm.dao.EnvironmentDAO">
+    <resultMap id="Environment" type="Environment">
+        <id column="id" property="id"/>
+        <result column="environment_name" property="name"/>
+        <result column="environment_code" property="code"/>
+        <result column="environment_order" property="order"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getAllEnvironment" resultMap="Environment">
+        SELECT id, environment_name,  environment_code, environment_order, create_time, update_time FROM t_ucm_environment ORDER BY environment_order
+    </select>
+
+    <select id="getEnvironmentByCode" parameterType="string" resultMap="Environment">
+        SELECT id, environment_name,  environment_code, environment_order, create_time, update_time FROM t_ucm_environment WHERE environment_code = #{code}
+    </select>
+
+
+    <select id="getMaxOrder" resultType="int">
+        SELECT max(environment_order) FROM t_ucm_environment
+    </select>
+
+    <insert id="addEnvironment">
+        INSERT INTO t_ucm_environment (environment_name,  environment_code, environment_order, create_time, update_time) VALUES (#{name}, #{code}, #{order}, #{createTime}, #{updateTime});
+    </insert>
+
+
+
+
+</mapper>

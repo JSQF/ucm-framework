@@ -42,13 +42,13 @@ public class ProjectController {
 
     @RequestMapping("/show-add")
     public String showAddAction(HttpServletRequest request) {
-        request.setAttribute("projectTypeMap", ProjectType.getProjectTypeMap());
+        request.setAttribute("projectTypeMap", ProjectType.getNormalProjectTypeMap());
         return "project/add";
     }
 
     @RequestMapping("/show-manager")
     public String showManagerAction(HttpServletRequest request){
-        request.setAttribute("projectTypeMap", ProjectType.getProjectTypeMap());
+        request.setAttribute("projectTypeMap", ProjectType.getNormalProjectTypeMap());
         request.setAttribute("projectCodeNameMap", this.projectService.getAllProjectCodeNameMap());
         return "project/manager";
     }

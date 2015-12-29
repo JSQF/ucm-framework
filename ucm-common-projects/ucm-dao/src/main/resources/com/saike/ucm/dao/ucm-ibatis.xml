@@ -8,5 +8,6 @@
         <typeAlias type="com.saike.ucm.domain.User" alias="User"/>
         <typeAlias type="com.saike.ucm.domain.Project" alias="Project"/>
         <typeAlias type="com.saike.ucm.domain.IdbInformation" alias="IdbInformation"/>
+        <typeAlias type="com.saike.ucm.domain.Environment" alias="Environment"/>
     </typeAliases>
 </configuration>

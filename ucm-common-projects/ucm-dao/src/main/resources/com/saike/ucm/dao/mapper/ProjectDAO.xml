@@ -17,6 +17,10 @@
         SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectCode}
     </select>
 
+    <select id="getProjectById" parameterType="int" resultMap="Project">
+        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectId}
+    </select>
+
     <select id="getAllProjects" parameterType="string" resultMap="Project">
         SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project order by code
     </select>
