@@ -3,6 +3,7 @@ package com.saike.ucm.web.utils;
 import com.saike.ucm.exception.IllegalParameterException;
 import com.saike.ucm.web.form.AddEnvironmentForm;
 import com.saike.ucm.web.form.AddProjectForm;
+import com.saike.ucm.web.form.ListEnvironmentIpForm;
 import com.saike.ucm.web.form.ShowUpdateProjectForm;
 import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.util.StringUtils;
@@ -50,6 +51,18 @@ public class FormCheckUtils {
 
         if(!StringUtils.hasLength(form.getCode())) {
             throw new IllegalParameterException("请填写环境代码");
+        }
+    }
+
+    public static void checkListEnvironmentIpForm(ListEnvironmentIpForm form) throws IllegalParameterException {
+        if(!StringUtils.hasLength(form.getEnvironmentId())) {
+            throw new IllegalParameterException("环境ID不能为空");
+        }
+
+        try{
+            Integer.parseInt(form.getEnvironmentId());
+        }catch (NumberFormatException e) {
+            throw new IllegalParameterException("环境ID格式不正确", e);
         }
     }
 }

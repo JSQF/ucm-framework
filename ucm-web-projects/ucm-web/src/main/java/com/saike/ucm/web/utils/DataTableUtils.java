@@ -1,14 +1,9 @@
 package com.saike.ucm.web.utils;
 
 import com.meidusa.fastjson.JSON;
-import com.saike.ucm.domain.Environment;
-import com.saike.ucm.domain.Project;
-import com.saike.ucm.domain.ProjectType;
-import com.saike.ucm.domain.User;
-import com.saike.ucm.web.domain.DataTableResult;
-import com.saike.ucm.web.domain.ListProjectRecord;
-import com.saike.ucm.web.domain.ListUserRecord;
-import com.saike.ucm.web.domain.LitEnvironmentRecord;
+import com.saike.ucm.domain.*;
+import com.saike.ucm.web.domain.*;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -73,8 +68,37 @@ public class DataTableUtils {
         return records;
     }
 
-    public static List<LitEnvironmentRecord> getListEnvironmentRecord(List<Environment> results) {
-
-        return null;
+    public static List<ListEnvironmentRecord> getListEnvironmentRecord(List<Environment> results) {
+        if (results == null || results.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<ListEnvironmentRecord> records = new ArrayList<>();
+        for(Environment environment : results) {
+            ListEnvironmentRecord record = new ListEnvironmentRecord();
+            record.setId(environment.getId());
+            record.setName(environment.getName());
+            record.setCode(environment.getCode());
+            record.setOrder(environment.getOrder());
+            record.setTotal(results.size());
+            record.setStatusDesc(environment.isStatus() ?"启用" : "停用");
+            records.add(record);
+        }
+        return records;
     }
+
+    public static List<ListEnvironmentIpRecord> getListEnvironmentIpRecord(List<EnvironmentIp> allEnvironmentIp) {
+        if (allEnvironmentIp == null || allEnvironmentIp.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<ListEnvironmentIpRecord> records = new ArrayList<>();
+        for(EnvironmentIp environmentIp: allEnvironmentIp) {
+            ListEnvironmentIpRecord record = new ListEnvironmentIpRecord();
+            record.setId(environmentIp.getId());
+            record.setEnvironmentId(environmentIp.getEnvironmentId());
+            record.setIp(environmentIp.getIp());
+            records.add(record);
+        }
+        return records;
+    }
+
 }

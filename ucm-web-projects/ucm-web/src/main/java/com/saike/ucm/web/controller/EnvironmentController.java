@@ -1,17 +1,18 @@
 package com.saike.ucm.web.controller;
 
 import com.saike.ucm.domain.Environment;
-import com.saike.ucm.domain.PaginationResult;
-import com.saike.ucm.domain.dao.Pagination;
+import com.saike.ucm.domain.EnvironmentIp;
 import com.saike.ucm.exception.IllegalParameterException;
 import com.saike.ucm.exception.UcmException;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
 import com.saike.ucm.service.EnvironmentService;
 import com.saike.ucm.web.domain.DataTableResult;
-import com.saike.ucm.web.domain.LitEnvironmentRecord;
+import com.saike.ucm.web.domain.ListEnvironmentIpRecord;
+import com.saike.ucm.web.domain.ListEnvironmentRecord;
 import com.saike.ucm.web.form.AddEnvironmentForm;
 import com.saike.ucm.web.form.ListEnvironmentForm;
+import com.saike.ucm.web.form.ListEnvironmentIpForm;
 import com.saike.ucm.web.utils.Constants;
 import com.saike.ucm.web.utils.DataTableUtils;
 import com.saike.ucm.web.utils.FormCheckUtils;
@@ -50,6 +51,7 @@ public class EnvironmentController {
         try {
             FormCheckUtils.checkAddEnvironmentForm(form);
             this.environmentService.addEnvironment(form.getCode(), form.getName());
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_OK, null, null).toJson());
         } catch (IllegalParameterException e) {
             ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_BAD_REQUEST, e.getMessage(), null).toJson());
         } catch (AlreadyExistsException e) {
@@ -63,11 +65,10 @@ public class EnvironmentController {
 
     @RequestMapping("/list-environment")
     public void listEnvironmentAction(HttpServletResponse response, ListEnvironmentForm form) throws IOException, ServletException{
-
-        DataTableResult<Environment> dataTableResult  = new DataTableResult<>();
+        DataTableResult<ListEnvironmentRecord> dataTableResult  = new DataTableResult<>();
         try {
             List<Environment> allEnvironmentList = this.environmentService.getAllEnvironment();
-            dataTableResult.setData(allEnvironmentList);
+            dataTableResult.setData(DataTableUtils.getListEnvironmentRecord(allEnvironmentList));
             dataTableResult.setDraw(form.getDraw());
             dataTableResult.setRecordsFiltered(allEnvironmentList.size());
             dataTableResult.setRecordsTotal(allEnvironmentList.size());
@@ -76,7 +77,32 @@ public class EnvironmentController {
             logger.error("查询环境异常", e);
             DataTableUtils.dataTableErrorResponse(response, form.getDraw(), e.getMessage());
         }
+    }
 
+    @RequestMapping("/list-environment-ip")
+    public void listEnvironmentIp(HttpServletResponse response, ListEnvironmentIpForm form) throws ServletException, IOException {
+
+        try{
+            FormCheckUtils.checkListEnvironmentIpForm(form);
+        }catch(IllegalParameterException e) {
+            logger.error("查询环境IP异常", e);
+            DataTableUtils.dataTableErrorResponse(response, form.getDraw(), e.getMessage());
+            return;
+        }
+
+        DataTableResult<ListEnvironmentIpRecord> dataTableResult  = new DataTableResult<>();
+
+        try{
+            List<EnvironmentIp> allEnvironmentIp = this.environmentService.getAllEnvironmentIp(form.getEnvironmentId());
+            dataTableResult.setData(DataTableUtils.getListEnvironmentIpRecord(allEnvironmentIp));
+            dataTableResult.setDraw(form.getDraw());
+            dataTableResult.setRecordsTotal(allEnvironmentIp.size());
+            dataTableResult.setRecordsFiltered(allEnvironmentIp.size());
+            DataTableUtils.dataTableResponse(response, dataTableResult);
+        }catch (UcmServiceException e) {
+            logger.error("查询环境IP异常", e);
+            DataTableUtils.dataTableErrorResponse(response, form.getDraw(), e.getMessage());
+        }
 
     }
 }

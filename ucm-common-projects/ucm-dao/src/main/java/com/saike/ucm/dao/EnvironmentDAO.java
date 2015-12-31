@@ -1,6 +1,7 @@
 package com.saike.ucm.dao;
 
 import com.saike.ucm.domain.Environment;
+import com.saike.ucm.domain.EnvironmentIp;
 import com.saike.ucm.domain.dao.Pagination;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface EnvironmentDAO {
     Environment getEnvironmentByCode(String code);
 
     Integer getMaxOrder();
+
+    List<EnvironmentIp> getAllEnvironmentIpByEnvironmentId(String environmentId);
 }

@@ -23,7 +23,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" class="close closeAdd" data-dismiss="modal" aria-hidden="true"></button>
                             <h4 class="modal-title">添加环境</h4>
                         </div>
                         <div class="modal-body">
@@ -59,6 +59,37 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+            <div class="modal fade" id="addEnvironmentIpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close closeAdd" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">添加IP</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label>IP</label>
+                                        <div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-file-text"></i>
+											</span>
+                                            <input id="addEnvironmentIp" type="text" class="form-control" maxlength="32" placeholder="IP">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn blue checkAddEnvironmentIpBtn">添加</button>
+                                    <button type="reset" class="btn default resetAddEnvironmentIpForm">重置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
             <div class="modal fade" id="confirmAddEnvironment" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -67,10 +98,29 @@
                             <h4 id="confirmTitle" class="modal-title">确认</h4>
                         </div>
                         <div id="confirmAddProjectMessage" class="modal-body">
-
+                            确定添加吗?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn default addProjectBtn" data-dismiss="modal">确定</button>
+                            <button type="button" class="btn default addEnvironmentBtn" data-dismiss="modal">确定</button>
+                            <button type="button" class="btn red" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="confirmAddEnvironmentIp" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">确认</h4>
+                        </div>
+                        <div class="modal-body">
+                            确定添加吗?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn default addEnvironmentIpBtn" data-dismiss="modal">确定</button>
                             <button type="button" class="btn red" data-dismiss="modal">取消</button>
                         </div>
                     </div>
@@ -121,6 +171,8 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </table>
                         </div>
@@ -148,7 +200,7 @@
             $(".resetAddEnvironmentForm").click();
             $("#addEnvironmentModal").modal();
 
-        })
+        });
 
         $(".checkAddEnvironmentBtn").on('click', function(){
             var name = $("#addEnvironmentName").val();
@@ -164,9 +216,41 @@
                 $("#messageContent").html("请填写环境名称")
                 $("#message").modal();
             }
+            $("#confirmAddEnvironment").modal();
+        });
+
+        $(".addEnvironmentBtn").on('click', function(){
+
+            $.ajax({
+                url : "/env/add-environment.json",
+                type: "POST",
+                dataType:'json',
+                data: {
+                    name : $("#addEnvironmentName").val(),
+                    code : $("#addEnvironmentCode").val()
+                },
+                success: function(result) {
+                    if(result.code == 200) {
+                        $("#messageTitle").html("成功");
+                        $("#messageContent").html("保存成功")
+                        $("#message").modal();
+                        $(".closeAdd").click();
+                        EnvironmentDataTable.reload();
+                    }else{
+                        $("#messageTitle").html("错误");
+                        $("#messageContent").html(result.message);
+                        $("#message").modal();
+                    }
+                },
+                error: function(){
+                    $("#messageTitle").html("错误");
+                    $("#messageContent").html("保存失败")
+                    $("#message").modal();
+                }
+            })
+        });
 
 
-        })
     });
 </script>
 <!-- END JAVASCRIPTS -->

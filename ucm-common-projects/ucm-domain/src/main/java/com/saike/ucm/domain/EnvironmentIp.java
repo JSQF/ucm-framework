@@ -5,15 +5,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.Date;
 
 /**
- * Created by huawei on 12/26/15.
+ * Created by huawei on 12/30/15.
  */
-public class Environment {
+public class EnvironmentIp {
 
     private Integer id;
-    private String name;
-    private String code;
-    private Integer order;
-    private boolean status;
+    private Integer environmentId;
+    private String ip;
     private Date createTime;
     private Date updateTime;
 
@@ -25,36 +23,20 @@ public class Environment {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getEnvironmentId() {
+        return environmentId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEnvironmentId(Integer environmentId) {
+        this.environmentId = environmentId;
     }
 
-    public String getCode() {
-        return code;
+    public String getIp() {
+        return ip;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public Date getCreateTime() {

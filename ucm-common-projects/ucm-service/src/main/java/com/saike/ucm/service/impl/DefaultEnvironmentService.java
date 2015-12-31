@@ -2,6 +2,7 @@ package com.saike.ucm.service.impl;
 
 import com.saike.ucm.dao.EnvironmentDAO;
 import com.saike.ucm.domain.Environment;
+import com.saike.ucm.domain.EnvironmentIp;
 import com.saike.ucm.exception.UcmException;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
@@ -58,6 +59,17 @@ public class DefaultEnvironmentService  implements EnvironmentService {
             this.environmentDAO.addEnvironment(environment);
         }catch (Exception e) {
             throw new UcmServiceException("保存环境信息异常", e);
+        }
+
+
+    }
+
+    @Override
+    public List<EnvironmentIp> getAllEnvironmentIp(String environmentId) throws UcmServiceException{
+        try{
+            return this.environmentDAO.getAllEnvironmentIpByEnvironmentId(environmentId);
+        }catch (Exception e) {
+            throw new UcmServiceException("查询环境ip异常", e);
         }
     }
 

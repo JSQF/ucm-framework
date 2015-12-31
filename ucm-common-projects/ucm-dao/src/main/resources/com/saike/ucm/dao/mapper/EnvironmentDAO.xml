@@ -8,6 +8,15 @@
         <result column="environment_name" property="name"/>
         <result column="environment_code" property="code"/>
         <result column="environment_order" property="order"/>
+        <result column="status" property="status" javaType="boolean"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="EnvironmentIp" type="EnvironmentIp">
+        <id column="id" property="id"/>
+        <result column="environment_id" property="environmentId"/>
+        <result column="ip" property="ip"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -28,6 +37,10 @@
     <insert id="addEnvironment">
         INSERT INTO t_ucm_environment (environment_name,  environment_code, environment_order, create_time, update_time) VALUES (#{name}, #{code}, #{order}, #{createTime}, #{updateTime});
     </insert>
+
+    <select id="getAllEnvironmentIpByEnvironmentId" resultMap="EnvironmentIp">
+        SELECT id, environment_id, ip, create_time, update_time from t_ucm_environment_ip WHERE environment_id = #{environmentId}
+    </select>
 
 
 

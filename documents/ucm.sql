@@ -1,11 +1,21 @@
 DROP TABLE IF EXISTS t_ucm_environment;
 CREATE TABLE IF NOT EXISTS t_ucm_environment (
-  id                INT PRIMARY KEY AUTO_INCREMENT,
+  id                INT PRIMARY KEY       AUTO_INCREMENT,
   environment_name  VARCHAR(64)  NOT NULL,
   environment_code  VARCHAR(128) NOT NULL,
   environment_order INT          NOT NULL,
+  status            CHAR(1)      NOT NULL DEFAULT '1',
   create_time       DATETIME,
-  update_time       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  update_time       TIMESTAMP             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS t_ucm_environment_ip;
+CREATE TABLE IF NOT EXISTS t_ucm_environment_ip (
+  id             INT PRIMARY KEY AUTO_INCREMENT,
+  environment_id INT         NOT NULL,
+  ip             VARCHAR(16) NOT NULL,
+  create_time    DATETIME,
+  update_time    TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS t_ucm_user;
