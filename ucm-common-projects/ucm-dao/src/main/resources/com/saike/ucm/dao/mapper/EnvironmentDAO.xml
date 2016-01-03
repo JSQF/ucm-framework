@@ -8,7 +8,7 @@
         <result column="environment_name" property="name"/>
         <result column="environment_code" property="code"/>
         <result column="environment_order" property="order"/>
-        <result column="status" property="status" javaType="boolean"/>
+        <result column="active" property="active" javaType="boolean"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -22,11 +22,15 @@
     </resultMap>
 
     <select id="getAllEnvironment" resultMap="Environment">
-        SELECT id, environment_name,  environment_code, environment_order, create_time, update_time FROM t_ucm_environment ORDER BY environment_order
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment ORDER BY environment_order
     </select>
 
     <select id="getEnvironmentByCode" parameterType="string" resultMap="Environment">
-        SELECT id, environment_name,  environment_code, environment_order, create_time, update_time FROM t_ucm_environment WHERE environment_code = #{code}
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE environment_code = #{code}
+    </select>
+
+    <select id="getEnvironmentById" resultMap="Environment">
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE id = #{id}
     </select>
 
 
@@ -42,7 +46,13 @@
         SELECT id, environment_id, ip, create_time, update_time from t_ucm_environment_ip WHERE environment_id = #{environmentId}
     </select>
 
+    <insert id="addEnvironmentIp">
+        INSERT INTO t_ucm_environment_ip (environment_id, ip, create_time, update_time) values (#{environmentId}, #{ip}, #{createTime}, #{updateTime})
+    </insert>
 
+    <select id="getEnvironmentIp" parameterType="string" resultMap="EnvironmentIp">
+        SELECT id, environment_id, ip, create_time, update_time FROM t_ucm_environment_ip where ip = #{ip}
+    </select>
 
 
 </mapper>

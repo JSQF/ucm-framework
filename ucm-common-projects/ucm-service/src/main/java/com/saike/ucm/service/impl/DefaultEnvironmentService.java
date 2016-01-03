@@ -73,6 +73,36 @@ public class DefaultEnvironmentService  implements EnvironmentService {
         }
     }
 
+    @Override
+    public Environment getEnvironmentById(String environmentId) throws UcmServiceException {
+        try{
+            return this.environmentDAO.getEnvironmentById(Integer.parseInt(environmentId));
+        }catch (Exception e) {
+            throw new UcmServiceException("查询环境信息异常", e);
+        }
+    }
+
+    @Override
+    public void addEnvironmentIp(Integer id, String ip) throws UcmServiceException {
+        try{
+            EnvironmentIp environmentIp = new EnvironmentIp();
+            environmentIp.setEnvironmentId(id);
+            environmentIp.setIp(ip);
+            this.environmentDAO.addEnvironmentIp(environmentIp);
+        }catch (Exception e) {
+            throw new UcmServiceException("保存环境IP异常", e);
+        }
+    }
+
+    @Override
+    public EnvironmentIp getEnvironmentIp(String ip) throws UcmServiceException {
+        try{
+            return this.environmentDAO.getEnvironmentIp(ip);
+        }catch (Exception e) {
+            throw new UcmServiceException("获取环境IP信息异常", e);
+        }
+    }
+
     public EnvironmentDAO getEnvironmentDAO() {
         return environmentDAO;
     }

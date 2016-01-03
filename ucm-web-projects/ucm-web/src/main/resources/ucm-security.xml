@@ -29,7 +29,7 @@
 
     <bean id="activeDirectoryLdapAuthenticationProvider" class="org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider">
         <constructor-arg index="0" value="chexiang.com"/>
-        <constructor-arg index="1" value="ldap://ladp01.dds.com:389"/>
+        <constructor-arg index="1" value="ldap://ldap01.dds.com:389"/>
         <constructor-arg index="2" value="dc=dds,dc=com"/>
         <property name="convertSubErrorCodesToExceptions" value="true"/>
     </bean>
@@ -40,5 +40,7 @@
     </bean>
 
     <bean id="ucmCsrfSecurityRequestMatcher" class="com.saike.ucm.security.UcmCsrfSecurityRequestMatcher" />
+
+
 
 </beans>

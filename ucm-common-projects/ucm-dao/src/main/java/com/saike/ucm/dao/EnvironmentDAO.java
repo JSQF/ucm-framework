@@ -19,7 +19,13 @@ public interface EnvironmentDAO {
 
     Environment getEnvironmentByCode(String code);
 
+    Environment getEnvironmentById(Integer id);
+
     Integer getMaxOrder();
 
     List<EnvironmentIp> getAllEnvironmentIpByEnvironmentId(String environmentId);
+
+    void addEnvironmentIp(EnvironmentIp environmentIp);
+
+    EnvironmentIp getEnvironmentIp(String ip);
 }

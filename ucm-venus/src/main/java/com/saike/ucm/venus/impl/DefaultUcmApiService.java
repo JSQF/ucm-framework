@@ -7,6 +7,8 @@ import com.saike.ucm.domain.api.UcmProperty;
 import com.saike.ucm.exception.api.UcmApiException;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 
@@ -28,9 +30,10 @@ public class DefaultUcmApiService implements UcmApiService {
         //ucm-web mock data
         List<UcmProperty> lists = new ArrayList<>();
 
-        InputStream is = DefaultUcmApiService.class.getResourceAsStream("/ucm-web.properties");
+        InputStream is = null;
 
         try{
+            is = new FileInputStream(new File("/Users/huawei/ucm-web.properties"));
             Properties props = new Properties();
             props.load(is);
 

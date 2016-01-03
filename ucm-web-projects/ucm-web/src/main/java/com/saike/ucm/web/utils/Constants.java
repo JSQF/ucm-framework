@@ -13,4 +13,5 @@ public final class Constants {
     public static final int UCM_WEB_CODE_NOT_FOUND = 404;
     public static final int UCM_WEB_CODE_INTERNAL_ERROR = 500;
 
+    public static final String DOT = ".";
 }

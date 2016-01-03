@@ -17,9 +17,8 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-
             <!-- /.modal -->
-            <div class="modal fade" id="addEnvironmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addEnvironmentModal" tabindex="-1" role="dialog" aria-labelledby="addEnvironmentModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -59,11 +58,11 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <div class="modal fade" id="addEnvironmentIpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addEnvironmentIpModal" tabindex="-2" role="dialog" aria-labelledby="addEnvironmentIpModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close closeAdd" data-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" class="close closeAdd closeAddEnvironmentIpModal" data-dismiss="modal" aria-hidden="true"></button>
                             <h4 class="modal-title">添加IP</h4>
                         </div>
                         <div class="modal-body">
@@ -90,11 +89,11 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <div class="modal fade" id="confirmAddEnvironment" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal fade" id="confirmAddEnvironment" tabindex="-3" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" class="close closeConfirmAddEnvironment" data-dismiss="modal" aria-hidden="true"></button>
                             <h4 id="confirmTitle" class="modal-title">确认</h4>
                         </div>
                         <div id="confirmAddProjectMessage" class="modal-body">
@@ -109,7 +108,7 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <div class="modal fade" id="confirmAddEnvironmentIp" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal fade" id="confirmAddEnvironmentIp" tabindex="-4" role="dialog" aria-labelledby="confirmAddEnvironmentIpLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -120,8 +119,27 @@
                             确定添加吗?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn default addEnvironmentIpBtn" data-dismiss="modal">确定</button>
-                            <button type="button" class="btn red" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn default addEnvironmentIpBtn">确定</button>
+                            <button type="button" class="btn red closeAddEnvironmentIpBtn" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="confirmDeleteEnvironmentIpModal" tabindex="-4" role="dialog" aria-labelledby="confirmDeleteEnvironmentIpModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">确认</h4>
+                        </div>
+                        <div class="modal-body deleteEnvironmentIpMessage">
+                            确定删除吗?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn default confirmDeleteEnvironmentIpBtn">确定</button>
+                            <button type="button" class="btn red cancelDeleteEnvironmentIpBtn" data-dismiss="modal">取消</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -254,6 +272,7 @@
     });
 </script>
 <!-- END JAVASCRIPTS -->
+<input hidden="hidden" id="deleteEnvironmentIp">
 </body>
 <!-- END BODY -->
 </html>

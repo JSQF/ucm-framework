@@ -1,11 +1,7 @@
 package com.saike.ucm.web.utils;
 
 import com.saike.ucm.exception.IllegalParameterException;
-import com.saike.ucm.web.form.AddEnvironmentForm;
-import com.saike.ucm.web.form.AddProjectForm;
-import com.saike.ucm.web.form.ListEnvironmentIpForm;
-import com.saike.ucm.web.form.ShowUpdateProjectForm;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.saike.ucm.web.form.*;
 import org.springframework.util.StringUtils;
 
 /**
@@ -64,5 +60,41 @@ public class FormCheckUtils {
         }catch (NumberFormatException e) {
             throw new IllegalParameterException("环境ID格式不正确", e);
         }
+    }
+
+    public static void checkAddEnvironmentIpForm(AddEnvironmentIpForm form) throws IllegalParameterException {
+        if(!StringUtils.hasLength(form.getIp())) {
+            throw new IllegalParameterException("环境ID不存在");
+        }
+
+        if(!StringUtils.hasLength(form.getIp())){
+            throw new IllegalParameterException("IP不能为空");
+        }
+
+        String ip = form.getIp();
+
+        if (ip.endsWith("\\" +Constants.DOT)) {
+            throw new IllegalParameterException("IP格式不正确");
+        }
+
+        String[] array = ip.split("\\" +Constants.DOT);
+
+        if (array == null || array.length <= 0) {
+            throw new IllegalParameterException("IP格式不正确");
+        }
+
+        for(int i = 0; i < array.length; i++) {
+            try{
+                int data = Integer.parseInt(array[i]);
+
+                if (data < 0 || data > 255) {
+                    throw new IllegalParameterException("IP格式不正确");
+                }
+            }catch (NumberFormatException e) {
+                throw new IllegalParameterException("IP格式不正确");
+            }
+        }
+
+
     }
 }

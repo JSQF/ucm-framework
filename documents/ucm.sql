@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS t_ucm_environment (
   environment_name  VARCHAR(64)  NOT NULL,
   environment_code  VARCHAR(128) NOT NULL,
   environment_order INT          NOT NULL,
-  status            CHAR(1)      NOT NULL DEFAULT '1',
+  active            CHAR(1)      NOT NULL DEFAULT '1',
   create_time       DATETIME,
   update_time       TIMESTAMP             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

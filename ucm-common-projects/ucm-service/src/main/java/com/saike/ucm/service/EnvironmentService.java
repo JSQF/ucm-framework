@@ -18,4 +18,10 @@ public interface EnvironmentService {
     void addEnvironment(String code, String name) throws AlreadyExistsException, UcmException;
 
     List<EnvironmentIp> getAllEnvironmentIp(String environmentId) throws UcmServiceException;
+
+    Environment getEnvironmentById(String environmentId) throws UcmServiceException;
+
+    void addEnvironmentIp(Integer id, String ip) throws UcmServiceException;
+
+    EnvironmentIp getEnvironmentIp(String ip) throws UcmServiceException;
 }

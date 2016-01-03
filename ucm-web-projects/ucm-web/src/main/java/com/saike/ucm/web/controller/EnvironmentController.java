@@ -11,6 +11,7 @@ import com.saike.ucm.web.domain.DataTableResult;
 import com.saike.ucm.web.domain.ListEnvironmentIpRecord;
 import com.saike.ucm.web.domain.ListEnvironmentRecord;
 import com.saike.ucm.web.form.AddEnvironmentForm;
+import com.saike.ucm.web.form.AddEnvironmentIpForm;
 import com.saike.ucm.web.form.ListEnvironmentForm;
 import com.saike.ucm.web.form.ListEnvironmentIpForm;
 import com.saike.ucm.web.utils.Constants;
@@ -103,6 +104,34 @@ public class EnvironmentController {
             logger.error("查询环境IP异常", e);
             DataTableUtils.dataTableErrorResponse(response, form.getDraw(), e.getMessage());
         }
+    }
+
+    @RequestMapping("/add-environment-ip")
+    public void addEnvironmentIpAction(HttpServletResponse response, AddEnvironmentIpForm form) throws ServletException, IOException {
+        try{
+            FormCheckUtils.checkAddEnvironmentIpForm(form);
+        }catch(IllegalParameterException e) {
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_BAD_REQUEST, e.getMessage(), null).toJson());
+            return;
+        }
+        try {
+            Environment environment = this.environmentService.getEnvironmentById(form.getEnvironmentId());
+            if (environment == null) {
+                ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_NOT_FOUND, "未找到对应环境信息", null).toJson());
+                return;
+            }
+            EnvironmentIp environmentIp = this.environmentService.getEnvironmentIp(form.getIp());
+            if (environmentIp != null) {
+                ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_BAD_REQUEST, "IP已存在" + this.environmentService.getEnvironmentById("" + environmentIp.getEnvironmentId()).getName() + "中", null).toJson());
+                return;
+            }
+            this.environmentService.addEnvironmentIp(environment.getId(), form.getIp());
+        } catch (UcmServiceException e) {
+            logger.error("", e);
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, e.getMessage(), null).toJson());
+            return;
+        }
+        ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_OK, null, null).toJson());
 
     }
 }

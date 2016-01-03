@@ -35,9 +35,9 @@ var EnvironmentDataTable = {
                 "title": "操作",
                 width:"30%",
                 "render": function (data, type, row) {
-                    var addEnvironmentIpBtn = '<a href="javascript:;" class="btn default btn-xs purple addEnvironmentIpBtn"  data_id="' + row.id + '">管理IP</a>';
+                    var showAddEnvironmentIpBtn = '<a href="javascript:;" class="btn default btn-xs purple showAddEnvironmentIpBtn"  data_id="' + row.id + '">管理IP</a>';
                     var deleteEnvironmentBtn = '<a href="javascript:;" class="btn default btn-xs purple deleteEnvironment"  data_id="' + row.id + '"><i class="fa fa-remove"></i>停用</a>';
-                    return addEnvironmentIpBtn + "&nbsp;" + deleteEnvironmentBtn;
+                    return showAddEnvironmentIpBtn + "&nbsp;" + deleteEnvironmentBtn;
                 }
             }, {
                 "title": "移动",
@@ -64,7 +64,7 @@ var EnvironmentDataTable = {
             }]
         });
 
-        this.environmentDataTable.on('click',"tbody td .addEnvironmentIpBtn", function(){
+        this.environmentDataTable.on('click',"tbody td .showAddEnvironmentIpBtn", function(){
             var trs = $("#environment_manager").children('tbody').children('tr');
             var nTr = $(this).parents('tr')[0];
 
@@ -83,7 +83,7 @@ var EnvironmentDataTable = {
                 EnvironmentDataTable.environmentDataTable.fnOpen(nTr, html, "info_row");
 
 
-                $("#environmentIp_table").dataTable({
+                var environmentIpDataTable = $("#environmentIp_table").dataTable({
                     "processing": false,
                     "serverSide": true,
                     "sort": false,
@@ -104,11 +104,50 @@ var EnvironmentDataTable = {
                     }, {
                         "title": "操作",
                         "width": '20%',
-                        "render": function (data) {
-                            return "<a>删除</a>";
+                        "render": function (data, type, row) {
+                            return '<a data_environment_ip="' + row.ip + '" data_environment_ip_id ="' + row.id+'" class="btn red btn-xs deleteEnvironmentIpBtn">删除</a>';
                         }
-                    }]
+                    }],
                 });
+
+                environmentIpDataTable.on('draw.dt', function(){
+                    $(".deleteEnvironmentIpBtn").on('click', function(){
+                        var deleteEnvironmentIpBtn = $(this);
+                        var environmentIpId =  deleteEnvironmentIpBtn.attr("data_environment_ip_id");
+                        var environmentIp = deleteEnvironmentIpBtn.attr("data_environment_ip");
+                        alert(environmentIp);
+                        $("#deleteEnvironmentIp").val(environmentIpId);
+                        $(".deleteEnvironmentIpMessage").html("确定要删除" + environmentIp + "吗?");
+                        $(".confirmDeleteEnvironmentIpModal").modal();
+                    })
+
+                    $(".confirmDeleteEnvironmentIpBtn").on('click', function(){
+                        $.ajax({
+                            url:'/env/delete-environment-ip.json',
+                            type:'POST',
+                            dataType:'json',
+                            data: {
+                                environmentIpId:$("#deleteEnvironmentIp").val()
+                            },
+                            success: function(result) {
+                                if (result.code == 200) {
+                                    $("#messageTitle").html("成功");
+                                    $("#messageContent").html("删除成功");
+                                    $("#message").modal();
+                                }else{
+                                    $("#messageTitle").html("错误");
+                                    $("#messageContent").html(result.message);
+                                    $("#message").modal();
+                                }
+                            },
+                            error: function(){
+                                $("#messageTitle").html("异常");
+                                $("#messageContent").html("请联系管理员");
+                                $("#message").modal();
+                            }
+                        });
+                    })
+                })
 
                 $("#showAddEnvironmentIpModalBtn").on('click', function(){
                     $("#addEnvironmentIpModal").modal();
@@ -118,14 +157,14 @@ var EnvironmentDataTable = {
                     var ip = $("#addEnvironmentIp").val();
                     if (ip == null || ip == '') {
                         $("#messageTitle").html("错误");
-                        $("#messageContent").html("请填写IP")
+                        $("#messageContent").html("请填写IP");
                         $("#message").modal();
                         return;
                     }
 
                     if (ip.endsWith(".")) {
                         $("#messageTitle").html("错误");
-                        $("#messageContent").html("IP格式错误")
+                        $("#messageContent").html("IP格式错误");
                         $("#message").modal();
                         return;
                     }
@@ -135,29 +174,30 @@ var EnvironmentDataTable = {
                     for(var i = 0; i < array.length; i++) {
                         if (isNaN(array[i])) {
                             $("#messageTitle").html("错误");
-                            $("#messageContent").html("IP格式错误")
+                            $("#messageContent").html("IP格式错误");
                             $("#message").modal();
                             return;
                         }
 
                         if (array[i] > 255 || array[i] < 1) {
                             $("#messageTitle").html("错误");
-                            $("#messageContent").html("IP格式错误")
+                            $("#messageContent").html("IP格式错误");
                             $("#message").modal();
                             return;
                         }
                     }
-                    $(".confirmAddEnvironmentIp").modal();
+                    $("#confirmAddEnvironmentIp").modal();
 
                 })
 
                 $(".addEnvironmentIpBtn").on('click', function(){
                     $.ajax({
-                        url : '/env/add-environment-ip',
+                        url : '/env/add-environment-ip.json',
                         type: 'POST',
                         dataType: 'json',
                         data: {
-
+                            environmentId:$("#showAddEnvironmentIpModalBtn").attr('data_environment_id'),
+                            ip: $("#addEnvironmentIp").val()
                         },
                         beforeSend: function(){
                             $(".wait").modal();
@@ -166,13 +206,31 @@ var EnvironmentDataTable = {
                             $(".wait").toggle();
                         },
                         success: function(result) {
+                            if(result.code == 200) {
+                                $("#messageTitle").html("成功");
+                                $("#messageContent").html("添加成功");
+                                $("#message").modal();
+                                $(".closeConfirmAddEnvironment").click();
+                                $(".closeAddEnvironmentIpModal").click();
+                                $(".closeAddEnvironmentIpBtn").click();
+                                $("#addEnvironmentIp").val("");
+                                environmentIpDataTable.fnDraw();
+                            }else {
+                                $("#messageTitle").html("错误");
+                                $("#messageContent").html(result.message)
+                                $("#message").modal();
+                            }
 
                         },
-                        error: function(result) {
-
+                        error: function() {
+                            $("#messageTitle").html("错误");
+                            $("#messageContent").html("系统错误请联系管理员");
+                            $("#message").modal();
                         }
                     });
                 })
+
+
             }
         });
     }

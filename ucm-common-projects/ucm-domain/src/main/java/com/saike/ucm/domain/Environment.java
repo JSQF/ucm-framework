@@ -13,7 +13,7 @@ public class Environment {
     private String name;
     private String code;
     private Integer order;
-    private boolean status;
+    private boolean active;
     private Date createTime;
     private Date updateTime;
 
@@ -49,12 +49,12 @@ public class Environment {
         this.order = order;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Date getCreateTime() {

@@ -80,7 +80,7 @@ public class DataTableUtils {
             record.setCode(environment.getCode());
             record.setOrder(environment.getOrder());
             record.setTotal(results.size());
-            record.setStatusDesc(environment.isStatus() ?"启用" : "停用");
+            record.setStatusDesc(environment.isActive() ?"启用" : "停用");
             records.add(record);
         }
         return records;
