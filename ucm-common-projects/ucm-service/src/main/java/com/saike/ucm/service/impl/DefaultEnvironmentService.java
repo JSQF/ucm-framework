@@ -103,6 +103,55 @@ public class DefaultEnvironmentService  implements EnvironmentService {
         }
     }
 
+    @Override
+    public EnvironmentIp getEnvironmentIpById(int id) throws UcmServiceException {
+        try{
+            return this.environmentDAO.getEnvironmentIpById(id);
+        }catch (Exception e) {
+            throw new UcmServiceException("获取IP信息异常", e);
+        }
+    }
+
+    @Override
+    public void deleteEnvironmentIpById(Integer id) throws UcmServiceException {
+        try{
+            this.environmentDAO.deleteEnvironmentIpById(id);
+        }catch (Exception e) {
+            throw new UcmServiceException(e);
+        }
+    }
+
+    @Override
+    public void updateEnvironmentStatus(Integer environmentId, String status) throws UcmServiceException {
+        Environment environment = new Environment();
+        environment.setId(environmentId);
+        environment.setActive("0".equals(status) ? false : true);
+        try{
+            this.environmentDAO.updateEnvironment(environment);
+        }catch (Exception e) {
+            throw new UcmServiceException(e);
+        }
+    }
+
+    @Override
+    public Environment getEnvironmentByOrder(int order) throws UcmServiceException {
+        return this.environmentDAO.getEnvironmentByOrder(order);
+    }
+
+    @Override
+    public void updateEnvironmentOrder(Integer id, int order) throws UcmServiceException {
+        Environment environment = new Environment();
+        environment.setId(id);
+        environment.setOrder(order);
+
+        try{
+            this.environmentDAO.updateEnvironment(environment);
+        }catch (Exception e) {
+            throw new UcmServiceException(e);
+        }
+
+    }
+
     public EnvironmentDAO getEnvironmentDAO() {
         return environmentDAO;
     }

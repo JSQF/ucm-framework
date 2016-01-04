@@ -10,7 +10,7 @@
         <result column="environment_order" property="order"/>
         <result column="active" property="active" javaType="boolean"/>
         <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
+        <result column="update_time" property="updateTime" javaType="java.util.Date"/>
     </resultMap>
 
     <resultMap id="EnvironmentIp" type="EnvironmentIp">
@@ -33,6 +33,12 @@
         SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE id = #{id}
     </select>
 
+    <select id="getEnvironmentByOrder" resultMap="Environment">
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE order = #{order}
+    </select>
+
+
+
 
     <select id="getMaxOrder" resultType="int">
         SELECT max(environment_order) FROM t_ucm_environment
@@ -41,6 +47,17 @@
     <insert id="addEnvironment">
         INSERT INTO t_ucm_environment (environment_name,  environment_code, environment_order, create_time, update_time) VALUES (#{name}, #{code}, #{order}, #{createTime}, #{updateTime});
     </insert>
+
+    <update id="updateEnvironment">
+        UPDATE t_ucm_environment SET update_time = #{updateTime}
+        <if test="active != null">
+            , active = #{active}
+        </if>
+        <if test="order != null">
+            , active = #{order}
+        </if>
+        WHERE id = #{id}
+    </update>
 
     <select id="getAllEnvironmentIpByEnvironmentId" resultMap="EnvironmentIp">
         SELECT id, environment_id, ip, create_time, update_time from t_ucm_environment_ip WHERE environment_id = #{environmentId}
@@ -53,6 +70,14 @@
     <select id="getEnvironmentIp" parameterType="string" resultMap="EnvironmentIp">
         SELECT id, environment_id, ip, create_time, update_time FROM t_ucm_environment_ip where ip = #{ip}
     </select>
+
+    <select id="getEnvironmentIpById" resultMap="EnvironmentIp">
+        SELECT id, environment_id, ip, create_time, update_time FROM t_ucm_environment_ip where id = #{id}
+    </select>
+
+    <delete id="deleteEnvironmentIpById" parameterType="int">
+        DELETE FROM t_ucm_environment_ip where id = #{id}
+    </delete>
 
 
 </mapper>

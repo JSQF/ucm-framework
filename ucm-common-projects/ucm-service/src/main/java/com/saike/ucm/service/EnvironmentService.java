@@ -24,4 +24,14 @@ public interface EnvironmentService {
     void addEnvironmentIp(Integer id, String ip) throws UcmServiceException;
 
     EnvironmentIp getEnvironmentIp(String ip) throws UcmServiceException;
+
+    EnvironmentIp getEnvironmentIpById(int id) throws UcmServiceException;
+
+    void deleteEnvironmentIpById(Integer id) throws UcmServiceException;
+
+    void updateEnvironmentStatus(Integer id, String status) throws UcmServiceException;
+
+    Environment getEnvironmentByOrder(int order) throws UcmServiceException;
+
+    void updateEnvironmentOrder(Integer id, int order) throws UcmServiceException;
 }

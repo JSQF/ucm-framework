@@ -15,7 +15,7 @@ public class Environment {
     private Integer order;
     private boolean active;
     private Date createTime;
-    private Date updateTime;
+    private Date updateTime = new Date();
 
     public Integer getId() {
         return id;

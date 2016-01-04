@@ -97,4 +97,26 @@ public class FormCheckUtils {
 
 
     }
+
+    public static void checkDeleteEnvironmentIpForm(DeleteEnvironmentForm form) throws IllegalParameterException {
+        if (!StringUtils.hasLength(form.getEnvironmentIpId())) {
+            throw new IllegalParameterException("删除环境IP的ID不能为空");
+        }
+
+        try{
+            Integer.parseInt(form.getEnvironmentIpId());
+        }catch (NumberFormatException e){
+            throw new IllegalParameterException("删除环境IP的ID格式不正确");
+        }
+    }
+
+    public static void checkChangeEnvironmentStatusForm(ChangeEnvironmentStatusForm form) throws IllegalParameterException {
+        if(!StringUtils.hasLength(form.getEnvironmentId())) {
+            throw new IllegalParameterException("修改的环境ID不能为空");
+        }
+
+        if(!StringUtils.hasLength(form.getStatus())) {
+            throw new IllegalParameterException("修改状态不能为空");
+        }
+    }
 }

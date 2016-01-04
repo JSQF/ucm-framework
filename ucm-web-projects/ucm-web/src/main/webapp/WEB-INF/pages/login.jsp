@@ -51,10 +51,14 @@
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" action="<%=request.getContextPath()%>/login/do-login.htm" method="post">
         <h3 class="form-title">统一配置</h3>
-        <div class="alert alert-danger display-hide">
+        <% String error = request.getParameter("error"); if(error != null && error.equalsIgnoreCase("true")){
+            %>
+        <div class="alert alert-danger">
             <button class="close" data-close="alert"></button>
-			<span id="LoginAlterMessage"></span>
+            <span id="LoginAlterMessage">用户名或者密码错误</span>
         </div>
+        <%
+        }%>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Username</label>
             <input class="form-control form-control-solid placeholder-no-fix required" type="text" autocomplete="off" placeholder="用户名" name="username"/>

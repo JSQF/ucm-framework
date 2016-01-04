@@ -28,4 +28,12 @@ public interface EnvironmentDAO {
     void addEnvironmentIp(EnvironmentIp environmentIp);
 
     EnvironmentIp getEnvironmentIp(String ip);
+
+    EnvironmentIp getEnvironmentIpById(int id);
+
+    void deleteEnvironmentIpById(Integer id);
+
+    void updateEnvironment(Environment environment);
+
+    Environment getEnvironmentByOrder(int order);
 }
