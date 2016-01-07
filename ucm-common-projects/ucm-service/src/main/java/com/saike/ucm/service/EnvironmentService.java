@@ -34,4 +34,6 @@ public interface EnvironmentService {
     Environment getEnvironmentByOrder(int order) throws UcmServiceException;
 
     void updateEnvironmentOrder(Integer id, int order) throws UcmServiceException;
+
+    Environment getEnvironmentByIp(String clientIp) throws UcmServiceException;
 }

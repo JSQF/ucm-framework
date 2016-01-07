@@ -7,6 +7,7 @@ import com.saike.ucm.exception.UcmException;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
 import com.saike.ucm.service.EnvironmentService;
+import com.sun.tools.javac.comp.Env;
 
 import java.util.Date;
 import java.util.List;
@@ -150,6 +151,47 @@ public class DefaultEnvironmentService  implements EnvironmentService {
             throw new UcmServiceException(e);
         }
 
+    }
+
+    @Override
+    public Environment getEnvironmentByIp(String clientIp) throws UcmServiceException {
+        if(clientIp == null) {
+            return null;
+        }
+        String[] ipArray = clientIp.split("\\.");
+        int length = ipArray.length;
+
+        EnvironmentIp environmentIp = null;
+
+        Environment environment = null;
+
+        try{
+            do{
+                StringBuffer ip = new StringBuffer();
+                for(int i = 0;i < length -1; i++) {
+                    ip.append(ipArray[i] + ".");
+                }
+                ip.append(ipArray[length - 1]);
+                environmentIp = this.environmentDAO.getEnvironmentIp(ip.toString());
+                length = length - 1;
+            }while(environmentIp == null && length != 0);
+
+
+
+            if (environmentIp == null) {
+                environment = this.environmentDAO.getDefaultEnvironment();
+            }else {
+                environment = this.environmentDAO.getEnvironmentById(environmentIp.getEnvironmentId());
+            }
+        }catch (Exception e) {
+            throw new UcmServiceException(e);
+        }
+
+        if (environment == null) {
+            throw new UcmServiceException("未找到对应环境");
+        }
+
+        return environment;
     }
 
     public EnvironmentDAO getEnvironmentDAO() {

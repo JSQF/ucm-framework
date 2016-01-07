@@ -2,6 +2,7 @@ package com.saike.ucm.service;
 
 import com.saike.ucm.domain.PaginationResult;
 import com.saike.ucm.domain.Project;
+import com.saike.ucm.domain.ProjectConfigurationVersionControl;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
 
@@ -19,4 +20,8 @@ public interface ProjectService {
     PaginationResult<Project> paginate(String projectCode, String projectType, int start, int length) throws UcmServiceException;
 
     Project getProjectById(String projectId) throws UcmServiceException;
+
+    Project getProjectByCode(String projectCode) throws UcmServiceException;
+
+    ProjectConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException;
 }

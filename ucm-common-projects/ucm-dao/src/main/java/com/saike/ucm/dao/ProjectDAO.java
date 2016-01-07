@@ -1,7 +1,9 @@
 package com.saike.ucm.dao;
 
 import com.saike.ucm.domain.Project;
+import com.saike.ucm.domain.ProjectConfigurationVersionControl;
 import com.saike.ucm.domain.dao.Pagination;
+import com.saike.ucm.domain.dao.ProjectConfigurationVersionControlCondition;
 
 import java.util.List;
 
@@ -21,4 +23,6 @@ public interface ProjectDAO {
     int paginateCount(Pagination condition);
 
     Project getProjectById(String projectId);
+
+    List<ProjectConfigurationVersionControl> getProjectConfigurationVersionControl(ProjectConfigurationVersionControlCondition condition);
 }

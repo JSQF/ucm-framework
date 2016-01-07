@@ -3,6 +3,7 @@ package com.saike.ucm.service.impl;
 import com.saike.ucm.dao.ProjectDAO;
 import com.saike.ucm.domain.PaginationResult;
 import com.saike.ucm.domain.Project;
+import com.saike.ucm.domain.ProjectConfigurationVersionControl;
 import com.saike.ucm.domain.dao.Pagination;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
@@ -98,6 +99,22 @@ public class DefaultProjectService implements ProjectService {
         }catch(Exception e) {
             throw new UcmServiceException("获取项目信息失败", e);
         }
+    }
+
+    @Override
+    public Project getProjectByCode(String projectCode) throws UcmServiceException {
+        try{
+            return this.projectDAO.getProjectByCode(projectCode);
+        }catch (Exception e) {
+            throw new UcmServiceException(e);
+        }
+    }
+
+    @Override
+    public ProjectConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException {
+        ProjectConfigurationVersionControl condition = new ProjectConfigurationVersionControl();
+
+        return null;
     }
 
 

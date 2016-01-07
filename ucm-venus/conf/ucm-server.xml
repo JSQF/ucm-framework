@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
-       default-autowire="byName">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <import resource="classpath:ucm-dao.xml"/>
+    <import resource="classpath:ucm-service.xml"/>
 
 
     <!-- import server side spring context file -->
@@ -31,7 +33,6 @@
         <property name="password" value="venus"/>
     </bean>
 
-    <bean id="ucmApiService"
-        class="com.saike.ucm.venus.impl.DefaultUcmApiService"/>
+
 
 </beans>

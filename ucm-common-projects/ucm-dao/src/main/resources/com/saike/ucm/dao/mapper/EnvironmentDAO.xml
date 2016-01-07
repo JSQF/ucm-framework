@@ -34,11 +34,13 @@
     </select>
 
     <select id="getEnvironmentByOrder" resultMap="Environment">
-        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE order = #{order}
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE environment_order = #{order}
     </select>
 
 
-
+    <select id="getDefaultEnvironment" resultMap="Environment">
+        SELECT id, environment_name,  environment_code, environment_order, active, create_time, update_time FROM t_ucm_environment WHERE environment_order = 1
+    </select>
 
     <select id="getMaxOrder" resultType="int">
         SELECT max(environment_order) FROM t_ucm_environment

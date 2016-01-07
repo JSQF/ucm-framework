@@ -22,11 +22,39 @@
         </dependency>
         <dependency>
             <groupId>com.saike.ucm</groupId>
+            <artifactId>ucm-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.saike.ucm</groupId>
             <artifactId>ucm-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.meidusa.venus</groupId>
             <artifactId>venus-backend</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>

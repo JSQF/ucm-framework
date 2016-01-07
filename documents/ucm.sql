@@ -38,6 +38,15 @@ CREATE TABLE IF NOT EXISTS t_ucm_project (
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS t_ucm_project_configuration_version_control;
+CREATE TABLE IF NOT EXISTS t_ucm_project_configuration_version_control (
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  project_id  INT         NOT NULL,
+  version     VARCHAR(24) NOT NULL,
+  create_time DATETIME,
+  update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 DROP TABLE IF EXISTS t_ucm_event;
 CREATE TABLE IF NOT EXISTS t_ucm_event (
   id          INT PRIMARY KEY AUTO_INCREMENT,

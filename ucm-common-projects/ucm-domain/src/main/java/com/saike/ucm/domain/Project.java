@@ -14,6 +14,7 @@ public class Project {
     private String name;
     private String type;
     private String description;
+    private Boolean active;
     private Date createTime;
     private Date updateTime;
 
@@ -55,6 +56,14 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Date getCreateTime() {
