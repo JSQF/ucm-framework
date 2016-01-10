@@ -35,6 +35,7 @@
                 and type = #{condition.type}
             </if>
         </where>
+        limit #{start}, #{length}
     </select>
 
     <select id="paginateCount" resultType="int">
