@@ -18,4 +18,5 @@
 <script src="<%=request.getContextPath()%>/assets/js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/assets/js/dataTables.bootstrap.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/assets/js/menu.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/assets/js/message.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->

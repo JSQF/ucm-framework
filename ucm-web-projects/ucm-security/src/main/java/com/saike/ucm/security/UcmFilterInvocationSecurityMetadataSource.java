@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * Created by huawei on 1/3/16.
  */
-@Component
+//@Component
 public class UcmFilterInvocationSecurityMetadataSource extends
         DefaultFilterInvocationSecurityMetadataSource {
     private final static Log logger = LogFactory

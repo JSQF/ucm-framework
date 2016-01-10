@@ -10,7 +10,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-@Component
 public class UcmAuthenticationProvider implements AuthenticationProvider {
 
     private static Logger logger = LoggerFactory.getLogger(UcmAuthenticationProvider.class);

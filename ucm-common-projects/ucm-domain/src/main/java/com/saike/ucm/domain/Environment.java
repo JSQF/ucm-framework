@@ -13,7 +13,7 @@ public class Environment {
     private String name;
     private String code;
     private Integer order;
-    private boolean active;
+    private Boolean active;
     private Date createTime;
     private Date updateTime = new Date();
 
@@ -49,11 +49,11 @@ public class Environment {
         this.order = order;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 

@@ -43,5 +43,4 @@
 
     <bean id="ucmCsrfSecurityRequestMatcher" class="com.saike.ucm.security.UcmCsrfSecurityRequestMatcher"/>
 
-    <bean class="com.saike.ucm.security.FilterInvocationServiceSecurityMetadataSourceBeanPostProcessor" />
 </beans>

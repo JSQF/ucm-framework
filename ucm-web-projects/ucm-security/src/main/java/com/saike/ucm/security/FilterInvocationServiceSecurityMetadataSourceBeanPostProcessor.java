@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by huawei on 1/7/16.
  */
-@Component
+//@Component
 public class FilterInvocationServiceSecurityMetadataSourceBeanPostProcessor implements BeanPostProcessor {
 
     @Autowired(required = true)
@@ -19,7 +19,7 @@ public class FilterInvocationServiceSecurityMetadataSourceBeanPostProcessor impl
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 
         if (bean instanceof FilterInvocationSecurityMetadataSource) {
-            return metadataSource;
+            //return metadataSource;
         }
         return bean;
     }

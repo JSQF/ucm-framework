@@ -1157,9 +1157,9 @@ if (typeof jQuery === 'undefined') {
     })
 
     // 是弹出框居中。。。
-    var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
-    var m_top = ( $(document).height() - $modal_dialog.height() )/2;
-    $modal_dialog.css({'margin':  m_top + 'px auto'});
+    //var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
+    //var m_top = ( $(document).height() - $modal_dialog.height() )/2;
+    //$modal_dialog.css({'margin':  m_top + 'px auto'});
   }
 
   Modal.prototype.resetAdjustments = function () {

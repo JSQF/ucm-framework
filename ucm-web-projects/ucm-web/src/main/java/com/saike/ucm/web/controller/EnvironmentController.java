@@ -132,15 +132,18 @@ public class EnvironmentController {
             nextEnvironment = this.environmentService.getEnvironmentByOrder(Integer.parseInt(form.getOrder()) +1);
 
             if (currentEnvironment == null|| nextEnvironment == null) {
+                ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_NOT_FOUND, "获取环境信息异常", null).toJson());
                 return;
             }
-
-
         } catch (UcmServiceException e) {
-            e.printStackTrace();
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, "获取环境信息异常", null).toJson());
+            return;
         }
 
-        TransactionDefinition definition = new DefaultTransactionDefinition();
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
         TransactionStatus status = ptx.getTransaction(definition);
         try{
             int order = nextEnvironment.getOrder();
@@ -148,13 +151,48 @@ public class EnvironmentController {
             this.environmentService.updateEnvironmentOrder(nextEnvironment.getId(), currentEnvironment.getOrder());
             ptx.commit(status);
         }catch (UcmServiceException e) {
+            logger.error("", e);
             ptx.rollback(status);
         }
+
+        ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_OK, null, null).toJson());
+
+
     }
 
     @RequestMapping("/up-environment")
     public void upEnvironmentAction(HttpServletResponse response, ChangeEnvironmentOrderForm form) throws ServletException, IOException {
+        Environment currentEnvironment = null;
+        Environment previewEnvironment = null;
+        try {
+            currentEnvironment= this.environmentService.getEnvironmentById(form.getEnvironmentId());
+            previewEnvironment = this.environmentService.getEnvironmentByOrder(Integer.parseInt(form.getOrder())  - 1);
 
+            if (currentEnvironment == null|| previewEnvironment == null) {
+                ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_NOT_FOUND, "获取环境信息异常", null).toJson());
+                return;
+            }
+        } catch (UcmServiceException e) {
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, "获取环境信息异常", null).toJson());
+            return;
+        }
+
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+        TransactionStatus status = ptx.getTransaction(definition);
+        try{
+            int order = previewEnvironment.getOrder();
+            this.environmentService.updateEnvironmentOrder(currentEnvironment.getId(), order);
+            this.environmentService.updateEnvironmentOrder(previewEnvironment.getId(), currentEnvironment.getOrder());
+            ptx.commit(status);
+        }catch (UcmServiceException e) {
+            logger.error("", e);
+            ptx.rollback(status);
+        }
+
+        ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_OK, null, null).toJson());
     }
     @RequestMapping("/list-environment-ip")
     public void listEnvironmentIp(HttpServletResponse response, ListEnvironmentIpForm form) throws ServletException, IOException {
