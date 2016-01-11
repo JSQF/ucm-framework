@@ -3,7 +3,7 @@ package com.saike.ucm.service.impl;
 import com.saike.ucm.dao.ProjectDAO;
 import com.saike.ucm.domain.PaginationResult;
 import com.saike.ucm.domain.Project;
-import com.saike.ucm.domain.ProjectConfigurationVersionControl;
+import com.saike.ucm.domain.ConfigurationVersionControl;
 import com.saike.ucm.domain.dao.Pagination;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
@@ -95,7 +95,7 @@ public class DefaultProjectService implements ProjectService {
     @Override
     public Project getProjectById(String projectId) throws UcmServiceException {
         try{
-            return this.projectDAO.getProjectById(projectId);
+            return this.projectDAO.getProjectById(Integer.parseInt(projectId));
         }catch(Exception e) {
             throw new UcmServiceException("获取项目信息失败", e);
         }
@@ -111,10 +111,42 @@ public class DefaultProjectService implements ProjectService {
     }
 
     @Override
-    public ProjectConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException {
-        ProjectConfigurationVersionControl condition = new ProjectConfigurationVersionControl();
+    public ConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException {
+        ConfigurationVersionControl condition = new ConfigurationVersionControl();
 
         return null;
+    }
+
+    @Override
+    public void updateProject(Project project, String name, String description, String type, String status) throws UcmServiceException {
+        boolean changed = false;
+        Project updateProject = new Project();
+        updateProject.setId(project.getId());
+        if (!project.getName().equalsIgnoreCase(name)) {
+            updateProject.setName(name);
+            changed = true;
+        }
+
+        if (!project.getDescription().trim().equalsIgnoreCase(description.trim())) {
+            updateProject.setDescription(description.trim());
+        }
+
+        if(!project.getType().equalsIgnoreCase(type)) {
+            updateProject.setType(type);
+        }
+
+        if(project.isActive() != Boolean.parseBoolean(status)) {
+            updateProject.setActive(Boolean.parseBoolean(status));
+        }
+
+        if(changed) {
+            updateProject.setUpdateTime(new Date());
+            try{
+                this.projectDAO.updateProject(updateProject);
+            }catch (Exception e) {
+                throw new UcmServiceException("更新项目异常", e);
+            }
+        }
     }
 
 

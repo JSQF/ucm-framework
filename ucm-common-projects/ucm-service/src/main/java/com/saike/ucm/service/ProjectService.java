@@ -2,7 +2,7 @@ package com.saike.ucm.service;
 
 import com.saike.ucm.domain.PaginationResult;
 import com.saike.ucm.domain.Project;
-import com.saike.ucm.domain.ProjectConfigurationVersionControl;
+import com.saike.ucm.domain.ConfigurationVersionControl;
 import com.saike.ucm.exception.service.AlreadyExistsException;
 import com.saike.ucm.exception.service.UcmServiceException;
 
@@ -23,5 +23,7 @@ public interface ProjectService {
 
     Project getProjectByCode(String projectCode) throws UcmServiceException;
 
-    ProjectConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException;
+    ConfigurationVersionControl getProjectConfigurationVersionControl(String projectCode, String version) throws UcmServiceException;
+
+    void updateProject(Project project, String name, String description, String type, String status) throws UcmServiceException;
 }

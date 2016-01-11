@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by huawei on 1/7/16.
  */
-public class ProjectConfigurationVersionControl {
+public class ConfigurationVersionControl {
     private Integer id;
     private Integer projectId;
     private String version;

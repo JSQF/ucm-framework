@@ -37,6 +37,70 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+            <div class="modal fade" id="updateProjectFormModal" tabindex="-1" role="dialog" aria-labelledby="updateProjectFormModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close closeUpdateProjectModalBtn" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">更新项目</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="portlet-body form">
+                                <form role="form">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label>项目代码</label>
+                                            <div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-file-text"></i>
+											</span>
+                                                <input id="updateProjectCode" type="text" class="form-control" maxlength="32" placeholder="项目代码" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目名称</label>
+                                            <div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-file-text"></i>
+											</span>
+                                                <input id="updateProjectName" type="text" class="form-control" maxlength="32" placeholder="项目名称">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目类型</label>
+                                            <select id="updateProjectType" class="form-control">
+                                                <c:forEach items="${projectTypeMap}" var="entry">
+                                                    <option value="${entry.key}">${entry.value}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>是否启用</label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="updateProjectStatus" value="true"> 启用 </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="updateProjectStatus" value="false"> 停用 </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目描述</label>
+                                            <textarea id="updateProjectDescription" class="form-control" maxlength="64" rows="3" placeholder="请填写项目描述" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn red checkUpdateProjectFormBtn">更新</button>
+                            <button type="button" class="btn default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <%@include file="../commons/message-modal.jsp"%>
             <!-- /.modal -->
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <!-- BEGIN PAGE HEADER-->
@@ -143,6 +207,7 @@
 <script src="<%=request.getContextPath()%>/assets/js/project-manager-datatable.js" type="text/javascript"></script>
 <script>
     $(function() {
+        MessageBox.init();
         ProjectManagerDataTable.init();
 
         $(".queryProjectBtn").on("click", function(){

@@ -119,4 +119,16 @@ public class FormCheckUtils {
             throw new IllegalParameterException("修改状态不能为空");
         }
     }
+
+    public static void checkUpdateProjectForm(UpdateProjectForm form) throws IllegalParameterException {
+        if (form.getProjectId() == null) {
+            throw new IllegalParameterException("更新项目ID不能为空");
+        }
+        try{
+            Integer.parseInt(form.getProjectId());
+        }catch (NumberFormatException e) {
+            throw new IllegalParameterException("更新项目ID格式不正确");
+        }
+
+    }
 }

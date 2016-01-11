@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
+        <result column="active" property="active"/>
         <result column="type" property="type"/>
         <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
@@ -14,19 +15,19 @@
     </resultMap>
 
     <select id="getProjectByCode" parameterType="string" resultMap="Project">
-        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectCode}
+        SELECT id, code,name,active, type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectCode}
     </select>
 
     <select id="getProjectById" parameterType="int" resultMap="Project">
-        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project WHERE code = #{projectId}
+        SELECT id, code,name,active, type,description,create_time,update_time FROM t_ucm_project WHERE id = #{projectId}
     </select>
 
     <select id="getAllProjects" parameterType="string" resultMap="Project">
-        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project order by code
+        SELECT id, code,name,active, type,description,create_time,update_time FROM t_ucm_project order by code
     </select>
 
     <select id="paginate" resultMap="Project">
-        SELECT id, code,name,type,description,create_time,update_time FROM t_ucm_project
+        SELECT id, code,name, active, type,description,create_time,update_time FROM t_ucm_project
         <where>
             <if test="condition.code!=null and condition.code !=''">
                 code = #{condition.code}
@@ -53,6 +54,23 @@
     <insert id="saveProject" parameterType="Project">
         INSERT INTO t_ucm_project (code, name, type, description, create_time, update_time) VALUES (#{code}, #{name}, #{type}, #{description}, #{createTime}, #{updateTime})
     </insert>
+
+    <update id="updateProject" parameterType="Project">
+        UPDATE t_ucm_project set update_time = #{updateTime}
+        <if test="name != null">
+            ,name = #{name}
+        </if>
+        <if test="active != null">
+            ,active = #{active}
+        </if>
+        <if test="type != null">
+            , type = #{type}
+        </if>
+        <if test="description">
+            , description = #{description}
+        </if>
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

@@ -73,10 +73,8 @@ public class ProjectController {
 
     @RequestMapping("/list-project")
     public void listProjectAction(HttpServletResponse response, ListProjectForm form) throws ServletException, IOException {
-
         try{
             PaginationResult<Project> paginateResult = this.projectService.paginate(form.getProjectCode(), form.getProjectType(), form.getStart(), form.getLength());
-
             DataTableResult<ListProjectRecord>  dtr = new DataTableResult<>();
             dtr.setDraw(form.getDraw());
             dtr.setData(DataTableUtils.getListProjectRecord(paginateResult.getResults()));
@@ -90,12 +88,11 @@ public class ProjectController {
         }
     }
 
-    @RequestMapping("/show-update")
+    @RequestMapping("/get-project-by-id")
     public void showUpdateProjectAction(HttpServletResponse response, ShowUpdateProjectForm form) throws ServletException, IOException {
         try{
             FormCheckUtils.checkShowUpdateProjectForm(form);
             Project project = this.projectService.getProjectById(form.getProjectId());
-
             if (project == null) {
                 ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_NOT_FOUND, "未找到对应项目", null).toJson());
                 return;
@@ -104,11 +101,32 @@ public class ProjectController {
         } catch (IllegalParameterException e) {
             ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_BAD_REQUEST, e.getMessage(), null).toJson());
         }catch(UcmServiceException e) {
+            logger.error("", e);
             ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, e.getMessage(), null).toJson());
         }
     }
 
-    public void updateProjectAction(HttpServletResponse response, UpdateProjectForm form) throws ServletException, IOException {
 
+    @RequestMapping("/update-project")
+    public void updateProjectAction(HttpServletResponse response, UpdateProjectForm form) throws ServletException, IOException {
+        try{
+            FormCheckUtils.checkUpdateProjectForm(form);
+        }catch (IllegalParameterException e) {
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_BAD_REQUEST, e.getMessage(), null).toJson());
+            return;
+        }
+
+        try{
+            Project project = this.projectService.getProjectById(form.getProjectId());
+            if (project == null) {
+                ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_NOT_FOUND, "未找到对应项目", null).toJson());
+                return;
+            }
+            this.projectService.updateProject(project, form.getName(), form.getDescription(), form.getType(), form.getStatus());
+        }catch(UcmServiceException e) {
+            logger.error("更新项目异常", e);
+            ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, "更新项目异常", null).toJson());
+            return;
+        }
     }
 }

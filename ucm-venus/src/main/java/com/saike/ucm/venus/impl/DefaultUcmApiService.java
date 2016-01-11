@@ -2,24 +2,19 @@ package com.saike.ucm.venus.impl;
 
 import com.meidusa.venus.annotations.Param;
 import com.meidusa.venus.backend.context.RequestContext;
-import com.meidusa.venus.client.simple.SimpleServiceFactory;
-import com.meidusa.venus.service.registry.ServiceDefinition;
-import com.meidusa.venus.service.registry.ServiceRegistry;
 import com.saike.ucm.api.UcmApiService;
 import com.saike.ucm.domain.Environment;
 import com.saike.ucm.domain.Project;
-import com.saike.ucm.domain.ProjectConfigurationVersionControl;
+import com.saike.ucm.domain.ConfigurationVersionControl;
 import com.saike.ucm.domain.api.UcmProperty;
 import com.saike.ucm.exception.api.UcmApiException;
 import com.saike.ucm.exception.service.UcmServiceException;
 import com.saike.ucm.service.EnvironmentService;
 import com.saike.ucm.service.ProjectService;
-import org.omg.CORBA.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -41,17 +36,12 @@ public class DefaultUcmApiService implements UcmApiService {
     @Resource
     private ProjectService projectService;
 
-    private String zookeeperServerList;
-
     public DefaultUcmApiService() {
-        Watcher watcher = new Watcher();
-        //watcher.start();
     }
 
     @Override
     public List<UcmProperty> getProperties(@Param(name = "projectCode") String projectCode, @Param(name = "version") String version) throws UcmApiException {
         String clientIp = RequestContext.getRequestContext().getRequestInfo().getRemoteIp();
-
         Environment environment = null;
         try {
             environment = this.environmentService.getEnvironmentByIp(clientIp);
@@ -59,49 +49,38 @@ public class DefaultUcmApiService implements UcmApiService {
             logger.error("获取环境信息异常", e);
             return new ArrayList<>();
         }
-
         if (environment == null) {
             return new ArrayList<>();
         }
-
         if (!environment.isActive()) {
             return new ArrayList<>();
         }
-
         Project project = null;
         try {
             project = this.projectService.getProjectByCode(projectCode);
         } catch (UcmServiceException e) {
             return new ArrayList<>();
         }
-
         if (project == null) {
             return new ArrayList<>();
         }
-
         if (!project.isActive()){
             return new ArrayList<>();
         }
-
-        ProjectConfigurationVersionControl pcvc = null;
-
+        ConfigurationVersionControl pcvc = null;
         try{
             pcvc = this.projectService.getProjectConfigurationVersionControl(projectCode, version);
         }catch (UcmServiceException e) {
             return new ArrayList<>();
         }
-
+        if (pcvc == null) {
+            return new ArrayList<>();
+        }
         if (!pcvc.isActive()) {
             return new ArrayList<>();
         }
-
-
-
-        //ucm-web mock data
         List<UcmProperty> lists = new ArrayList<>();
-
         InputStream is = null;
-
         try{
             is = new FileInputStream(new File("/Users/huawei/ucm-web.properties"));
             Properties props = new Properties();
@@ -153,28 +132,4 @@ public class DefaultUcmApiService implements UcmApiService {
         return false;
     }
 
-    public String getZookeeperServerList() {
-        return zookeeperServerList;
-    }
-
-    public void setZookeeperServerList(String zookeeperServerList) {
-        this.zookeeperServerList = zookeeperServerList;
-    }
-
-    static class Watcher extends Thread {
-
-        public void run() {
-
-            while(true){
-                System.out.println("run");
-                try {
-                    Thread.sleep(5000L);
-                } catch (InterruptedException e) {
-
-                }
-            }
-
-        }
-
-    }
 }

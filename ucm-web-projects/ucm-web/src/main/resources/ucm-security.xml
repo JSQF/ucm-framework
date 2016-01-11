@@ -22,6 +22,7 @@
                              authentication-failure-url="/login/index.htm?error=true"/>
         <security:logout logout-url="/logout.htm" logout-success-url="/login/index.htm?logout"/>
         <security:csrf request-matcher-ref="ucmCsrfSecurityRequestMatcher"/>
+        <security:access-denied-handler ref="ucmAccessDeniedHandler"/>
     </security:http>
 
     <security:authentication-manager>
@@ -42,5 +43,6 @@
     </bean>
 
     <bean id="ucmCsrfSecurityRequestMatcher" class="com.saike.ucm.security.UcmCsrfSecurityRequestMatcher"/>
+    <bean id="ucmAccessDeniedHandler" class="com.saike.ucm.security.UcmAccessDeniedHandler"/>
 
 </beans>

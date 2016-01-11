@@ -61,7 +61,7 @@
         }%>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <input class="form-control form-control-solid placeholder-no-fix required" type="text" autocomplete="off" placeholder="用户名" name="username"/>
+            <input class="form-control form-control-solid placeholder-no-fix required" type="text" autocomplete="off" placeholder="用户名" name="username" autofocus="autofocus"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Password</label>

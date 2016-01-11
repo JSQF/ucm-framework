@@ -1,7 +1,6 @@
 package com.saike.ucm.domain;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by huawei on 1/7/16.

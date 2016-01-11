@@ -5,14 +5,18 @@ var ProjectManagerDataTable = {
     // 更新项目
     //---------------------------
     showUpdateProjectBtn: null,
-    updateProjectModal: null,
-    closeUpdateProjectModalBtn: null,
-    checkUpdateProjectBtn : null,
+    updateProjectFormModal: null,
+
 
 
 
     reload : function(){
         this.projectManagerDataTable.fnDraw();
+    },
+
+    initUpdateModal: function(){
+        ProjectManagerDataTable.showUpdateProjectBtn = $(".showUpdateProjectBtn")
+        ProjectManagerDataTable.updateProjectFormModal = $("#updateProjectFormModal");
     },
 
     handlerDataTable: function(){
@@ -46,12 +50,53 @@ var ProjectManagerDataTable = {
             }, {
                 "title": "操作",
                 "render": function (data, type, row) {
+
+                    if (ProjectManagerDataTable.showUpdateProjectBtn != null) {
+                        ProjectManagerDataTable.showUpdateProjectBtn.off("click");
+                    }
+
+                    ProjectManagerDataTable.showUpdateProjectBtn.on('click', function(){
+                        var btn = $(this);
+                        var projectId = btn.attr('data_id');
+                        $.ajax({
+                            url:'/project/get-project-by-id.json',
+                            type:'POST',
+                            dataType:'json',
+                            data: {
+                                projectId: projectId
+                            },
+                            success: function(result) {
+                                if (result.code == 200) {
+                                    $("#updateProjectCode").val(result.data.code);
+                                    $("#updateProjectName").val(result.data.name);
+                                    $("#updateProjectType").val(result.data.type);
+                                    var radios = $("input[type=radio][name=updateProjectStatus]");
+                                    radios.parent('span').removeClass('checked');
+                                    radios.removeAttr('checked');
+                                    var radio = $("input[type=radio][name=updateProjectStatus][value='" + result.data.active + "']");
+                                    console.log(radio.length);
+                                    radio.parent('span').addClass("checked");
+                                    radio.attr('checked', 'checked');
+                                    //$("#updateProjectStatus").val(result.data.active);
+                                    $("#updateProjectDescription").val(result.data.description);
+                                    ProjectManagerDataTable.updateProjectFormModal.modal();
+                                }else{
+                                    MessageBox.setMessage("失败", result.message);
+                                    MessageBox.show();
+                                }
+                            },
+                            error: function(){
+                                MessageBox.showSystemError();
+                            }
+                        });
+
+                    });
+
                     var updateBtn = '<a href="javascript:;" class="btn purple btn-xs showUpdateProjectBtn" data_id="' + row.id + '">修改</a>';
                     var viewVersionBtn = '<a href="javascript:;" class="btn purple btn-xs showProjectVersionConig" data_id="' + row.id + '">查看配置版本</a>';
                     return updateBtn + "&nbsp;" + viewVersionBtn;
                 }
             }],
-            "lengthMenu": [ 1, 25, 50, 75, 100 ],
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_条",
                 "sZeroRecords": "没有找到符合条件的数据",
@@ -104,6 +149,7 @@ var ProjectManagerDataTable = {
     },
 
     init: function(){
+        this.initUpdateModal();
         this.handlerDataTable();
     }
 }

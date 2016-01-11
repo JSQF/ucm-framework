@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS t_ucm_user;
 CREATE TABLE IF NOT EXISTS t_ucm_user (
   id          INT PRIMARY KEY AUTO_INCREMENT,
   username    VARCHAR(32) NOT NULL,
+  admin       BOOLEAN         DEFAULT FALSE ,
   create_time DATETIME,
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -38,11 +39,12 @@ CREATE TABLE IF NOT EXISTS t_ucm_project (
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS t_ucm_project_configuration_version_control;
-CREATE TABLE IF NOT EXISTS t_ucm_project_configuration_version_control (
+DROP TABLE IF EXISTS t_ucm_config_version_control;
+CREATE TABLE IF NOT EXISTS t_ucm_config_version_control (
   id          INT PRIMARY KEY AUTO_INCREMENT,
   project_id  INT         NOT NULL,
   version     VARCHAR(24) NOT NULL,
+  status      BOOLEAN         DEFAULT TRUE,
   create_time DATETIME,
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
