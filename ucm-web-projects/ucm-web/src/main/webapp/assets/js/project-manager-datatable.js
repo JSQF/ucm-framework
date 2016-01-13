@@ -15,7 +15,7 @@ var ProjectManagerDataTable = {
     },
 
     initUpdateModal: function(){
-        ProjectManagerDataTable.showUpdateProjectBtn = $(".showUpdateProjectBtn")
+        ProjectManagerDataTable.showUpdateProjectBtn = $(".showUpdateProjeexcexcedfsctBtn");
         ProjectManagerDataTable.updateProjectFormModal = $("#updateProjectFormModal");
     },
 
@@ -51,46 +51,7 @@ var ProjectManagerDataTable = {
                 "title": "操作",
                 "render": function (data, type, row) {
 
-                    if (ProjectManagerDataTable.showUpdateProjectBtn != null) {
-                        ProjectManagerDataTable.showUpdateProjectBtn.off("click");
-                    }
 
-                    ProjectManagerDataTable.showUpdateProjectBtn.on('click', function(){
-                        var btn = $(this);
-                        var projectId = btn.attr('data_id');
-                        $.ajax({
-                            url:'/project/get-project-by-id.json',
-                            type:'POST',
-                            dataType:'json',
-                            data: {
-                                projectId: projectId
-                            },
-                            success: function(result) {
-                                if (result.code == 200) {
-                                    $("#updateProjectCode").val(result.data.code);
-                                    $("#updateProjectName").val(result.data.name);
-                                    $("#updateProjectType").val(result.data.type);
-                                    var radios = $("input[type=radio][name=updateProjectStatus]");
-                                    radios.parent('span').removeClass('checked');
-                                    radios.removeAttr('checked');
-                                    var radio = $("input[type=radio][name=updateProjectStatus][value='" + result.data.active + "']");
-                                    console.log(radio.length);
-                                    radio.parent('span').addClass("checked");
-                                    radio.attr('checked', 'checked');
-                                    //$("#updateProjectStatus").val(result.data.active);
-                                    $("#updateProjectDescription").val(result.data.description);
-                                    ProjectManagerDataTable.updateProjectFormModal.modal();
-                                }else{
-                                    MessageBox.setMessage("失败", result.message);
-                                    MessageBox.show();
-                                }
-                            },
-                            error: function(){
-                                MessageBox.showSystemError();
-                            }
-                        });
-
-                    });
 
                     var updateBtn = '<a href="javascript:;" class="btn purple btn-xs showUpdateProjectBtn" data_id="' + row.id + '">修改</a>';
                     var viewVersionBtn = '<a href="javascript:;" class="btn purple btn-xs showProjectVersionConig" data_id="' + row.id + '">查看配置版本</a>';
@@ -100,7 +61,7 @@ var ProjectManagerDataTable = {
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_条",
                 "sZeroRecords": "没有找到符合条件的数据",
-                "sProcessing": "<img src='/assets/wait.gif' />",
+                "loadingRecords": "<img src='/assets/wait.gif' />",
                 "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",
                 "sInfoEmpty": "木有记录",
                 "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",
@@ -115,14 +76,49 @@ var ProjectManagerDataTable = {
         });
 
         this.projectManagerDataTable.on('draw.dt', function(){
-            if(ProjectManagerDataTable.showUpdateProjectBtn != null) {
-                ProjectManagerDataTable.showUpdateProjectBtn.off('click');
+            if (ProjectManagerDataTable.showUpdateProjectBtn != null) {
+                //console.log('off');
+                ProjectManagerDataTable.showUpdateProjectBtn.off("click");
             }
 
-            ProjectManagerDataTable.showUpdateProjectBtn = $('.showUpdateProjectBtn');
-            ProjectManagerDataTable.showUpdateProjectBtn.on('click', function(){
+            ProjectManagerDataTable.showUpdateProjectBtn = $(".showUpdateProjectBtn");
 
-            })
+            ProjectManagerDataTable.showUpdateProjectBtn.on('click', function(){
+                var btn = $(this);
+                var projectId = btn.attr('data_id');
+                $.ajax({
+                    url:'/project/get-project-by-id.json',
+                    type:'POST',
+                    dataType:'json',
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function(result) {
+                        if (result.code == 200) {
+                            $("#updateProjectCode").val(result.data.code);
+                            $("#updateProjectName").val(result.data.name);
+                            $("#updateProjectType").val(result.data.type);
+                            var radios = $("input[type=radio][name=updateProjectStatus]");
+                            radios.parent('span').removeClass('checked');
+                            radios.removeAttr('checked');
+                            var radio = $("input[type=radio][name=updateProjectStatus][value='" + result.data.active + "']");
+                            console.log(radio.length);
+                            radio.parent('span').addClass("checked");
+                            radio.attr('checked', 'checked');
+                            //$("#updateProjectStatus").val(result.data.active);
+                            $("#updateProjectDescription").val(result.data.description);
+                            ProjectManagerDataTable.updateProjectFormModal.modal();
+                        }else{
+                            MessageBox.setMessage("失败", result.message);
+                            MessageBox.show();
+                        }
+                    },
+                    error: function(){
+                        MessageBox.showSystemError();
+                    }
+                });
+
+            });
         })
 
 

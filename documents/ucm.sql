@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS t_ucm_user;
 CREATE TABLE IF NOT EXISTS t_ucm_user (
   id          INT PRIMARY KEY AUTO_INCREMENT,
   username    VARCHAR(32) NOT NULL,
-  admin       BOOLEAN         DEFAULT FALSE ,
+  admin       BOOLEAN         DEFAULT FALSE,
   create_time DATETIME,
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -48,6 +48,26 @@ CREATE TABLE IF NOT EXISTS t_ucm_config_version_control (
   create_time DATETIME,
   update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+DROP TABLE IF EXISTS t_ucm_property_key;
+CREATE TABLE IF NOT EXISTS t_ucm_property_key (
+  id                 INT PRIMARY KEY AUTO_INCREMENT,
+  version_control_id INT          NOT NULL,
+  key_name           VARCHAR(128) NOT NULL,
+  create_time DATETIME,
+  update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS t_ucm_property_value;
+CREATE TABLE IF NOT EXISTS t_ucm_property_value(
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  key_id INT NOT NULL ,
+  environment_id int not null,
+  property_value varchar(2048),
+  create_time DATETIME,
+  update_time TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+CREATE UNIQUE INDEX idx_keyId_environmentId ON t_ucm_property_value(key_id, environment_id);
 
 DROP TABLE IF EXISTS t_ucm_event;
 CREATE TABLE IF NOT EXISTS t_ucm_event (
