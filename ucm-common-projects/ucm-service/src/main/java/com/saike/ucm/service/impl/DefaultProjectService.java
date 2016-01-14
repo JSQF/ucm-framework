@@ -79,7 +79,6 @@ public class DefaultProjectService implements ProjectService {
         condition.setCondition(queryProject);
         condition.setStart(start);
         condition.setLength(length);
-
         PaginationResult<Project> paginationResult = new PaginationResult<>();
         try{
             List<Project> projects = this.projectDAO.paginate(condition);
@@ -129,14 +128,17 @@ public class DefaultProjectService implements ProjectService {
 
         if (!project.getDescription().trim().equalsIgnoreCase(description.trim())) {
             updateProject.setDescription(description.trim());
+            changed = true;
         }
 
         if(!project.getType().equalsIgnoreCase(type)) {
             updateProject.setType(type);
+            changed = true;
         }
 
         if(project.isActive() != Boolean.parseBoolean(status)) {
             updateProject.setActive(Boolean.parseBoolean(status));
+            changed = true;
         }
 
         if(changed) {

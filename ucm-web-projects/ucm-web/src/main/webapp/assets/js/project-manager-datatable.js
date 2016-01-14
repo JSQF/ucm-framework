@@ -6,6 +6,7 @@ var ProjectManagerDataTable = {
     //---------------------------
     showUpdateProjectBtn: null,
     updateProjectFormModal: null,
+    checkUpdateProjectFormBtn: null,
 
 
 
@@ -17,6 +18,7 @@ var ProjectManagerDataTable = {
     initUpdateModal: function(){
         ProjectManagerDataTable.showUpdateProjectBtn = $(".showUpdateProjeexcexcedfsctBtn");
         ProjectManagerDataTable.updateProjectFormModal = $("#updateProjectFormModal");
+        ProjectManagerDataTable.checkUpdateProjectFormBtn = $(".checkUpdateProjectFormBtn");
     },
 
     handlerDataTable: function(){
@@ -95,17 +97,14 @@ var ProjectManagerDataTable = {
                     },
                     success: function(result) {
                         if (result.code == 200) {
+                            $("#updateProjectId").val(result.data.id);
                             $("#updateProjectCode").val(result.data.code);
                             $("#updateProjectName").val(result.data.name);
                             $("#updateProjectType").val(result.data.type);
                             var radios = $("input[type=radio][name=updateProjectStatus]");
                             radios.parent('span').removeClass('checked');
-                            radios.removeAttr('checked');
                             var radio = $("input[type=radio][name=updateProjectStatus][value='" + result.data.active + "']");
-                            console.log(radio.length);
                             radio.parent('span').addClass("checked");
-                            radio.attr('checked', 'checked');
-                            //$("#updateProjectStatus").val(result.data.active);
                             $("#updateProjectDescription").val(result.data.description);
                             ProjectManagerDataTable.updateProjectFormModal.modal();
                         }else{
@@ -119,29 +118,52 @@ var ProjectManagerDataTable = {
                 });
 
             });
-        })
+        });
 
+        ProjectManagerDataTable.checkUpdateProjectFormBtn.on('click', function(){
+            var updateProjectName = $("#updateProjectName").val();
 
-        $(".updateProject").on("click", function(){
+            if (updateProjectName == null || updateProjectName == '') {
+                MessageBox.setMessage("错误", "项目名称不能为空");
+                MessageBox.show();
+                return ;
+            }
+            var updateProjectDescription = $("#updateProjectDescription").val();
+            if (updateProjectDescription == null || updateProjectDescription == '') {
+                MessageBox.setMessage("错误", "项目描述不能为空");
+                MessageBox.show();
+                return;
+            }
+            $("#confirmUpdateProjectModal").modal();
+        });
+        $(".updateProjectBtn").on('click', function(){
+            $(".closeConfirmUpdateProjectModalBtn").click();
+            var status = $(".updateProjectStatus").parent('.checked').children().val();
             $.ajax({
-                "url":"/project/show-update.json",
-                "type":"POST",
-                "dateType":"json",
-                "data":{
-                    "projectId": $(this).attr("data_id")
+                url: '/project/update-project.json',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    projectId: $("#updateProjectId").val(),
+                    name: $("#updateProjectName").val(),
+                    type: $("#updateProjectType").val(),
+                    description: $("#updateProjectDescription").val(),
+                    status: status
                 },
-                success: function(result){
+                success: function(result) {
                     if (result.code == 200) {
-
+                        ProjectManagerDataTable.projectManagerDataTable.fnDraw();
+                        $(".closeUpdateProjectModalBtn").click();
+                        MessageBox.showSuccess("更新成功");
                     }else {
-
+                        MessageBox.showFailed(result.message);
                     }
                 },
-                error: function(){
-
+                error: function () {
+                    MessageBox.showSystemError();
                 }
-            })
-        });
+            });
+        })
     },
 
     init: function(){

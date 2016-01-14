@@ -54,6 +54,7 @@
 											<span class="input-group-addon">
 											<i class="fa fa-file-text"></i>
 											</span>
+                                                <input id="updateProjectId" hidden="hidden"/>
                                                 <input id="updateProjectCode" type="text" class="form-control" maxlength="32" placeholder="项目代码" readonly="readonly">
                                             </div>
                                         </div>
@@ -78,9 +79,9 @@
                                             <label>是否启用</label>
                                             <div class="radio-list">
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="updateProjectStatus" value="true"> 启用 </label>
+                                                    <input type="radio" class="updateProjectStatus" name="updateProjectStatus" value="true"> 启用 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="updateProjectStatus" value="false"> 停用 </label>
+                                                    <input type="radio" class="updateProjectStatus" name="updateProjectStatus" value="false"> 停用 </label>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -94,6 +95,25 @@
                         <div class="modal-footer">
                             <button type="button" class="btn red checkUpdateProjectFormBtn">更新</button>
                             <button type="button" class="btn default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="confirmUpdateProjectModal" tabindex="1" role="dialog" aria-labelledby="confirmUpdateProjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close closeConfirmUpdateProjectModalBtn" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">确认</h4>
+                        </div>
+                        <div class="modal-body">
+                            确定更新吗?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn default updateProjectBtn">确定</button>
+                            <button type="button" class="btn default cancelUpdateProjectBtn" data-dismiss="modal">取消</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->

@@ -18,8 +18,18 @@ var MessageBox = {
 
     },
 
+    showSuccess: function(message){
+        this.setMessage("成功", message);
+        this.show();
+    },
+
+    showFailed: function(message) {
+        this.setMessage("错误", message);
+        this.show();
+    },
+
     showSystemError: function(){
         this.setMessage("错误", "系统错误请联系管理员");
         this.show();
     }
-}
+};

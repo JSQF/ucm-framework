@@ -128,5 +128,7 @@ public class ProjectController {
             ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_INTERNAL_ERROR, "更新项目异常", null).toJson());
             return;
         }
+
+        ResponseUtils.responseJson(response, ResponseUtils.getAjaxResponse(Constants.UCM_WEB_CODE_OK, null, null).toJson());
     }
 }
